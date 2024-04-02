@@ -41,11 +41,9 @@
     gutter: zine_page_margin,
   )
   if draw_border {
-    zine_grid(
-      stroke: luma(0),
-      ..contents
+    zine_grid = zine_grid.with(
+      stroke: luma(0)
     )
-  } else {
-    zine_grid(..contents)
   }
+  zine_grid(..contents)
 }
