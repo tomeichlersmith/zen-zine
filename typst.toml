@@ -1,0 +1,15 @@
+[package]
+name = "zine"
+version = "0.1.0"
+entrypoint = "lib.typ"
+repository = "https://github.com/tomeichlersmith/zine"
+authors = ["Tom Eichlersmith <@tomeichlersmith>"]
+license = "MIT"
+description = "Excellently typset a fun little zine!"
+keyword = ["zine"]
+categories = ["fun", "layout"]
+
+[template]
+path = "template"
+entrypoint = "main.typ"
+#thumbnail = "thumbnail.png"
