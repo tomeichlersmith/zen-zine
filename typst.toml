@@ -13,3 +13,4 @@ categories = ["fun", "layout"]
 [template]
 path = "template"
 entrypoint = "main.typ"
+thumbnail = "template/preview.png"
