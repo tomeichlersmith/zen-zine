@@ -1,0 +1,8 @@
+# editing cache files
+.*.swp
+
+# generated PDF/PNG from testing
+*.pdf
+*.png
+!template/preview.png
+
