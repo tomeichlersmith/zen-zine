@@ -43,4 +43,4 @@ Roughly in order of priority.
     from the full page width and height (and the zine margin)
   - I'm currently struggling with finding out the page properties (what's the `#get` equivalent to `#set`?)
 - Add other zine sizes (there is a 16 page one I believe?)
-- 
+- Digital mode where zine pages are separate pages (of the same size) rather than 'sub pages' of a printer page
