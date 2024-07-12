@@ -44,3 +44,7 @@ Roughly in order of priority.
   - I'm currently struggling with finding out the page properties (what's the `#get` equivalent to `#set`?)
 - Add other zine sizes (there is a 16 page one I believe?)
 - Digital mode where zine pages are separate pages (of the same size) rather than 'sub pages' of a printer page
+- Figure out how syntax to enable `#show.zine(config)` syntax like other templates
+- Tweak margins to optimize for folding
+  - Zines have 3 borders - cut, outer fold, inner fold - we can squeeze the inner folds to expand the outer folds so that there is more tolerance on the folds and text wrapping around the outside is less likely
+- 🤯give user acces to two next pages next to each other (in final zine) so they can decide how to handle an inner fold🤯
