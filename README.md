@@ -45,7 +45,7 @@ Roughly in order of priority.
   - I'm currently struggling with finding out the page properties (what's the `#get` equivalent to `#set`?)
 - Add other zine sizes (there is a 16 page one I believe?)
 - ~~Digital mode where zine pages are separate pages (of the same size) rather than 'sub pages' of a printer page~~
-  - cc323123592d6a9203a96c7652e939d07f35ffbb
+  - [cc323123](https://github.com/tomeichlersmith/zen-zine/commit/cc323123592d6a9203a96c7652e939d07f35ffbb)
 - Figure out how syntax to enable `#show.zine(config)` syntax like other templates
   - [can "unpack" argument sinks `..sink` with `sink.pos()` to get an array of positional arguments](https://typst.app/docs/reference/foundations/arguments/)
   - still trying to figure out how to _provide_ an array of zine content pages in this syntactical style
