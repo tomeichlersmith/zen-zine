@@ -17,6 +17,7 @@
 // padding and alignment are respected.
 #zine(
   // draw_border: true,
-  // zine_page_margin: 5pt,
+  // zine_page_margin: 8pt,
+  // digital: false
   contents: my_eight_pages
 )
