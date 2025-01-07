@@ -4,8 +4,17 @@
   digital: false,
   contents: ()
 ) = {
+  // each of the zine pages share the margin with their neighbors
+  // this height/width is without margins
+  let zine_page_height = (8.5in-3*zine_page_margin)/2;
+  let zine_page_width = (11in-5*zine_page_margin)/4;
   if digital {
-    set page(height: 4.25in, width: 2.75in, margin: zine_page_margin)
+    // assign half the zine margin to each digital page
+    set page(
+      height: zine_page_height+zine_page_margin/2,
+      width: zine_page_width+zine_page_margin/2,
+      margin: zine_page_margin/2
+    )
     for (i, page) in contents.enumerate() {
       if i > 0 { pagebreak() }
       page
@@ -13,8 +22,6 @@
   } else {
     // set printer page size (typst's page) and a zine page size (pages in the zine)
     set page("us-letter", margin: zine_page_margin, flipped: true)
-    let zine_page_height = (8.5in-zine_page_margin)/2 - zine_page_margin;
-    let zine_page_width = (11in-zine_page_margin)/4 - zine_page_margin;
     
     let contents = (
       // reorder the pages so the order in the grid aligns with a zine template
