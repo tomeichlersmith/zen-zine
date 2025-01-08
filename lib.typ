@@ -2,7 +2,7 @@
   zine_page_margin: 8pt,
   draw_border: true,
   digital: false,
-  contents: ()
+  content
 ) = {
   // each of the zine pages share the margin with their neighbors
   // this height/width is without margins
@@ -15,13 +15,30 @@
       width: zine_page_width+zine_page_margin/2,
       margin: zine_page_margin/2
     )
-    for (i, page) in contents.enumerate() {
-      if i > 0 { pagebreak() }
-      page
-    }
+    content
   } else {
     // set printer page size (typst's page) and a zine page size (pages in the zine)
     set page("us-letter", margin: zine_page_margin, flipped: true)
+
+    let contents = ()
+    let current_content = []
+    for child in content.at("children") {
+      if child.func() == pagebreak {
+        contents.push(current_content)
+        current_content = []
+      } else {
+        current_content = current_content + child
+      }
+    }
+
+    if current_content != [] {
+      contents.push(current_content)
+    }
+
+    assert.eq(
+      contents.len(), 8,
+      message: "Document content does not have exactly 8 pages (7 pagebreaks)."
+    )
     
     let contents = (
       // reorder the pages so the order in the grid aligns with a zine template
