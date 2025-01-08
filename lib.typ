@@ -3,13 +3,16 @@
   draw_border: true,
   digital: false,
   content
-) = {
+) = context {
+  // we need to be in context so we can get the full page's height and width
+  // in order to deduce the zine page height and width
   // each of the zine pages share the margin with their neighbors
   // this height/width is without margins
-  let zine_page_height = (8.5in-3*zine_page_margin)/2;
-  let zine_page_width = (11in-5*zine_page_margin)/4;
+  let zine_page_height = (page.width - 3*zine_page_margin)/2;
+  let zine_page_width = (page.height - 5*zine_page_margin)/4;
   if digital {
     // assign half the zine margin to each digital page
+    // resize pages and then provide content since it has pagebreaks already
     set page(
       height: zine_page_height+zine_page_margin/2,
       width: zine_page_width+zine_page_margin/2,
@@ -17,9 +20,10 @@
     )
     content
   } else {
-    // set printer page size (typst's page) and a zine page size (pages in the zine)
-    set page("us-letter", margin: zine_page_margin, flipped: true)
-
+    // make sure page has the correct margin and it is flipped
+    set page(margin: zine_page_margin, flipped: true)
+    // break content into the array of pages using the pagebreak
+    // function and then place those pages into the grid
     let contents = ()
     let current_content = []
     for child in content.at("children") {

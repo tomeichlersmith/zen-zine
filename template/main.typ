@@ -3,6 +3,12 @@
 #set document(author: "Tom", title: "Zen Zine Example")
 #set text(font: "Libertinus Serif", lang: "en")
 
+// this page size is what the printer page size is
+// if building a digitial zine, the page will be re-set
+// so that the PDF pages align with the zine page size
+// and not the printer page size
+#set page("us-letter")
+
 // update heading rule to show that style is preserved
 #show heading.where(level: 1): hd => {
   pad(top: 2em, text(10em, align(center, hd.body)))
