@@ -2,6 +2,8 @@ _default:
     @just --list  
 
 # compile the template example once
-compile:
+compile *ARGS:
   sed '1c\#import "/lib.typ": *' template/main.typ |\
-    typst compile - template/preview.png --format png
+    typst compile - {{ ARGS }}
+
+preppreview: (compile "template/preview.png --format png")

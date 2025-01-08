@@ -9,7 +9,11 @@
 }
 
 #show: zine.with(
-  // digital: true // output PDF pages are the zine pages
+  // whether to make output PDF pages align with zine pages (true)
+  // or have the zine pages located onto a printer page (false)
+  // with this code, you can provide which kind you want on the command line
+  //   typst compile input.typ output.pdf --input digital=(true|false)
+  digital: json.decode(sys.inputs.at("digital", default: "false")),
   // zine_page_margin: 0.25in // margin of zine pages
   // draw_border: true // draw border boxes in printing mode
 )
