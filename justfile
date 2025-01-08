@@ -7,3 +7,6 @@ compile *ARGS:
     typst compile - {{ ARGS }}
 
 preppreview: (compile "template/preview.png --format png")
+
+manual:
+    typst compile manual.typ

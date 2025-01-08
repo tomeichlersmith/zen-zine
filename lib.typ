@@ -1,7 +1,25 @@
+/// construct an eight-page zine for the current printer page size
+/// 
+/// Each of the zine's pages should be separated by the `pagebreak()` function.
+/// This function will fail if there are not exactly seven `pagebreak()` calls
+/// within the document (implying eight pages are defined).
+///
+/// *Note* Unfortunately, we cannot render an example since zen-zine requires
+/// access to the page information to be able to deduce the size of the zine
+/// pages.
+///
+/// -> content
 #let zine(
+  /// size of margin around each zine page
+  /// -> length
   zine_page_margin: 0.25in,
+  /// whether to draw the border of the zine pages in printer mode
+  /// -> boolean
   draw_border: true,
+  /// whether to be in printer mode (false) or digital (true)
+  /// -> boolean
   digital: false,
+  /// input content of zine
   content
 ) = context {
   // we need to be in context so we can get the full page's height and width
