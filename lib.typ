@@ -1,5 +1,5 @@
 #let zine(
-  zine_page_margin: 8pt,
+  zine_page_margin: 0.25in,
   draw_border: true,
   digital: false,
   content
