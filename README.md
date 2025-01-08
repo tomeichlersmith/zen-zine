@@ -82,13 +82,15 @@ Roughly in order of priority.
 
 - Write documentation and generate a manual
 - ~~Deduce `page` properties so that user can change the page they wish to use.~~
+  - [Commit 96fd477a](https://github.com/tomeichlersmith/zen-zine/commit/96fd477ac332f73b2d3cbbee11ca62fbcd5d1a19)
   - Make sure the page is `flipped` and deduce the zine page width and height
     from the full page width and height (and the zine margin)
   - Have `zine` function be provided `context` so `page.width` and `page.height` are available
 - Add other zine sizes (there is a 16 page one I believe?)
 - ~~Digital mode where zine pages are separate pages (of the same size) rather than 'sub pages' of a printer page~~
-  - [cc323123](https://github.com/tomeichlersmith/zen-zine/commit/cc323123592d6a9203a96c7652e939d07f35ffbb)
+  - [Commit cc323123](https://github.com/tomeichlersmith/zen-zine/commit/cc323123592d6a9203a96c7652e939d07f35ffbb)
 - ~~Figure out how syntax to enable `#show.zine(config)` syntax like other templates~~
+  - [PR #3](https://github.com/tomeichlersmith/zen-zine/pull/3)
   - [can "unpack" argument sinks `..sink` with `sink.pos()` to get an array of positional arguments](https://typst.app/docs/reference/foundations/arguments/)
   - having user use `#pagebreak()` to signal where pages are within document content
 - Tweak margins to optimize for folding
