@@ -1,25 +1,45 @@
 /// construct an eight-page zine for the current printer page size
 /// 
-/// Each of the zine's pages should be separated by the `pagebreak()` function.
+/// === Requirements
+/// - Each of the zine's pages should be separated by the `pagebreak()` function.
+/// - Exactly seven `pagebreak()` calls
+///
+/// === #text(red.darken(25%), underline[Failure Mode])
 /// This function will fail if there are not exactly seven `pagebreak()` calls
 /// within the document (implying eight pages are defined).
 ///
-/// *Note* Unfortunately, we cannot render an example since zen-zine requires
+/// Unfortunately, we cannot render an example since zen-zine requires
 /// access to the page information to be able to deduce the size of the zine
 /// pages.
 ///
 /// -> content
 #let zine(
   /// size of margin around each zine page
+  ///
+  /// The default value of 0.25in is chosen because that is a pretty
+  /// common minimum margin for printers. You could freely shrink this
+  /// margin however the printer may clip the outer edges of the zine
+  /// pages.
+  ///
+  /// The inner margins are _shared_ between pages so this is also
+  /// the inner distance between any two zine pages.
   /// -> length
   zine_page_margin: 0.25in,
   /// whether to draw the border of the zine pages in printer mode
+  /// 
+  /// This border is sometimes helpful for seeing the placement of
+  /// content on the final printer-ready page.
   /// -> boolean
   draw_border: true,
   /// whether to be in printer mode (false) or digital (true)
+  ///
+  /// When creating a digital zine, the margin specified with `zine_page_margin`
+  /// is divided by two so that the digital visually looks like the printed
+  /// zine with the pages cut out.
   /// -> boolean
   digital: false,
   /// input content of zine
+  /// -> content
   content
 ) = context {
   // we need to be in context so we can get the full page's height and width
