@@ -1,7 +1,7 @@
 #import "@preview/tidy:0.4.0"
 
 #let docs = tidy.parse-module(
-  read("../lib.typ"),
+  read("lib.typ"),
   name: "zen-zine",
 )
 

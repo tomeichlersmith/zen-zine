@@ -1,8 +1,12 @@
 /// construct an eight-page zine for the current printer page size
 /// 
-/// === Requirements
-/// - Each of the zine's pages should be separated by the `pagebreak()` function.
-/// - Exactly seven `pagebreak()` calls
+/// The size of the zine pages are deduced from the current page size.
+/// The current page defines the size of the page that the zine would be
+/// printed on.
+///
+/// The zine's pages are provided in the order that they should be read,
+/// separated by `pagebreak()`s. They are wrapped and then moved into position
+/// so that any zine-page-internal layout is preserved.
 ///
 /// === #text(red.darken(25%), underline[Failure Mode])
 /// This function will fail if there are not exactly seven `pagebreak()` calls
