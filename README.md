@@ -94,5 +94,7 @@ Roughly in order of priority.
   - [can "unpack" argument sinks `..sink` with `sink.pos()` to get an array of positional arguments](https://typst.app/docs/reference/foundations/arguments/)
   - having user use `#pagebreak()` to signal where pages are within document content
 - Tweak margins to optimize for folding
-  - Zines have 3 borders - cut, outer fold, inner fold - we can squeeze the inner folds to expand the outer folds so that there is more tolerance on the folds and text wrapping around the outside is less likely
+  - Zines have 4 borders - outer margin, cut, outer fold, inner fold
+  - we can squeeze the inner folds to expand the outer folds so that there is more tolerance on the folds and text wrapping around the outside is less likely
+  - the outer margin is limited by a user's printer's capabilities
 - 🤯give user acces to two next pages next to each other (in final zine) so they can decide how to handle an inner fold🤯
