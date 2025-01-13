@@ -6,3 +6,5 @@
 *.png
 !template/preview.png
 
+# python venv with showman
+venv
