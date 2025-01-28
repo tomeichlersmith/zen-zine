@@ -106,4 +106,4 @@ Roughly in order of priority.
   - Zines have 4 borders - outer margin, cut, outer fold, inner fold
   - we can squeeze the inner folds to expand the outer folds so that there is more tolerance on the folds and text wrapping around the outside is less likely
   - the outer margin is limited by a user's printer's capabilities
-- 🤯give user acces to two next pages next to each other (in final zine) so they can decide how to handle an inner fold🤯
+- 🤯give user access to two next pages next to each other (in final zine) so they can decide how to handle an inner fold🤯
