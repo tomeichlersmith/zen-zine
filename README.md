@@ -1,7 +1,7 @@
 # zen-zine
 Excellently type-set a cute little zine about your favorite topic!
 
-Providing your eight pages in order will produce a US-Letter page with
+Providing your eight pages in order will produce a printer page with
 the content in a layout ready to be folded into a zine! The content is
 wrapped before movement so that padding and alignment are respected.
 

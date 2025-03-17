@@ -9,8 +9,8 @@
 /// so that any zine-page-internal layout is preserved.
 ///
 /// === #text(red.darken(25%), underline[Failure Mode])
-/// This function will fail if there are not exactly seven `pagebreak()` calls
-/// within the document (implying eight pages are defined).
+/// #text(red.darken(25%), [This function will fail if there are not exactly seven `pagebreak()` calls
+/// within the document (implying eight pages are defined).])
 ///
 /// Unfortunately, we cannot render an example since zen-zine requires
 /// access to the page information to be able to deduce the size of the zine
