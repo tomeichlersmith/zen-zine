@@ -12,9 +12,11 @@
 /// #text(red.darken(25%), [This function will fail if there are not exactly seven `pagebreak()` calls
 /// within the document (implying eight pages are defined).])
 ///
-/// Unfortunately, we cannot render an example since zen-zine requires
-/// access to the page information to be able to deduce the size of the zine
-/// pages.
+/// #tidy.show-example.default-layout-example(
+///   raw(template, lang: "typst"),
+///   preview,
+///   dir: ttb
+/// )
 ///
 /// -> content
 #let zine(

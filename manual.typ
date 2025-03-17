@@ -1,8 +1,13 @@
-#import "@preview/tidy:0.4.0"
+#import "@preview/tidy:0.4.2"
 
 #let docs = tidy.parse-module(
   read("lib.typ"),
   name: "zen-zine",
+  scope: (
+    template: read("template/main.typ"),
+    preview: image("template/preview.png"),
+    tidy: tidy
+  ),
 )
 
 #show heading.where(level: 1): hd => {
