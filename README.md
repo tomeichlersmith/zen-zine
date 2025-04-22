@@ -107,3 +107,4 @@ Roughly in order of priority.
   - we can squeeze the inner folds to expand the outer folds so that there is more tolerance on the folds and text wrapping around the outside is less likely
   - the outer margin is limited by a user's printer's capabilities
 - 🤯give user access to two next pages next to each other (in final zine) so they can decide how to handle an inner fold🤯
+- respect page numbers defined by `pagebreak()` when inserting zine pages onto printer page
