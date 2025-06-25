@@ -85,26 +85,3 @@ After installing `just`, the additional initialization recipes are in the justfi
 just init-showman # create a python3 venv and install showman for packaging
 just install # symlink local clone to local package area for testing
 ```
-
-## Improvement Ideas
-Roughly in order of priority.
-
-- Write documentation and generate a manual
-- ~~Deduce `page` properties so that user can change the page they wish to use.~~
-  - [Commit 96fd477a](https://github.com/tomeichlersmith/zen-zine/commit/96fd477ac332f73b2d3cbbee11ca62fbcd5d1a19)
-  - Make sure the page is `flipped` and deduce the zine page width and height
-    from the full page width and height (and the zine margin)
-  - Have `zine` function be provided `context` so `page.width` and `page.height` are available
-- Add other zine sizes (there is a 16 page one I believe?)
-- ~~Digital mode where zine pages are separate pages (of the same size) rather than 'sub pages' of a printer page~~
-  - [Commit cc323123](https://github.com/tomeichlersmith/zen-zine/commit/cc323123592d6a9203a96c7652e939d07f35ffbb)
-- ~~Figure out how syntax to enable `#show.zine(config)` syntax like other templates~~
-  - [PR #3](https://github.com/tomeichlersmith/zen-zine/pull/3)
-  - [can "unpack" argument sinks `..sink` with `sink.pos()` to get an array of positional arguments](https://typst.app/docs/reference/foundations/arguments/)
-  - having user use `#pagebreak()` to signal where pages are within document content
-- Tweak margins to optimize for folding
-  - Zines have 4 borders - outer margin, cut, outer fold, inner fold
-  - we can squeeze the inner folds to expand the outer folds so that there is more tolerance on the folds and text wrapping around the outside is less likely
-  - the outer margin is limited by a user's printer's capabilities
-- 🤯give user access to two next pages next to each other (in final zine) so they can decide how to handle an inner fold🤯
-- respect page numbers defined by `pagebreak()` when inserting zine pages onto printer page
