@@ -1,4 +1,10 @@
-#import "@preview/tidy:0.4.0"
+#import "@preview/tidy:0.4.3"
+
+// the module consists of exactly one function
+// and I'm not expecting the manual to be printed onto real paper
+// so I let the height of the page fit the content
+// making the manual a single oblong page
+#set page(height: auto)
 
 #let docs = tidy.parse-module(
   read("lib.typ"),

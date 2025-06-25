@@ -1,0 +1,17 @@
+name: manual
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: typst-community/setup-typst@v4
+      - uses: extractions/setup-just@v3
+      - uses: actions/checkout@v4
+      - run: just manual
+      - uses: actions/upload-artifact@v4
+        with:
+          path: manual.pdf
