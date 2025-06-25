@@ -3,6 +3,11 @@ name: manual
 on:
   push:
   workflow_dispatch:
+  release:
+    types: [released]
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -13,5 +18,16 @@ jobs:
       - uses: actions/checkout@v4
       - run: just manual
       - uses: actions/upload-artifact@v4
+        if: ${{ github.event_name != 'release' }}
         with:
+          name: manual
           path: manual.pdf
+      - name: upload manual to release assets
+        run: |
+          tag=${GITHUB_REF##refs/tags/}
+          name=zen-zine-${tag}-manual.pdf
+          mv manual.pdf ${name}
+          gh release upload ${tag} ${name}
+        if: ${{ github.event_name == 'release' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
