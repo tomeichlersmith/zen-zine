@@ -55,15 +55,42 @@
   ]
 }
 
-#set page(height: 5in, width: 3in, margin: 0pt)
-#zine-page(
-  margin: (top: 0.5in, bottom: 0.5in, left: 0.25in, right: 0.25in),
-  //footer: rect(width: 100%, height: 100%, fill: aqua.lighten(50%)),
-  rect(width: 100%, height: 100%)
-)
+#set page(flipped: true, margin: 0pt)
 
-#zine-page(
-  header: rect(width: 100%, height: 100%, fill: aqua),
-  //footer: rect(width: 100%, height: 100%, fill: aqua.lighten(50%)),
-  rect(width: 100%, height: 100%)
-)
+#context {
+  let contents = range(8).map(
+    i => align(center+top, text(size: 18pt, fill: aqua)[#i])
+  )
+
+  let contents = (
+    // reorder the pages so the order in the grid aligns with a zine template
+    contents.slice(1,5).rev()+contents.slice(5,8)+contents.slice(0,1)
+  ).map(
+    // wrap the contents in blocks the size of the zine pages so that we can
+    // maneuver them at will
+    elem => zine-page(
+      height: page.width/2,
+      width: page.height/4,
+      elem
+    )
+  ).enumerate().map(
+    // flip if on top row
+    elem => {
+      if elem.at(0) < 4 {
+        rotate(
+          180deg,
+          origin: center,
+          elem.at(1)
+        )
+      } else {
+        elem.at(1)
+      }
+    }
+  )
+  
+  let zine-grid = grid.with(
+    columns: 4 * (auto, ),
+    stroke: black
+  )
+  zine-grid(..contents)
+}
