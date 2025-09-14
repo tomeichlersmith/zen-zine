@@ -60,11 +60,6 @@
 #context {
   let contents = range(8).map(
     i => align(center+top, text(size: 18pt, fill: aqua)[#i])
-  )
-
-  let contents = (
-    // reorder the pages so the order in the grid aligns with a zine template
-    contents.slice(1,5).rev()+contents.slice(5,8)+contents.slice(0,1)
   ).map(
     // wrap the contents in blocks the size of the zine pages so that we can
     // maneuver them at will
@@ -73,6 +68,11 @@
       width: page.height/4,
       elem
     )
+  )
+
+  let contents = (
+    // reorder the pages so the order in the grid aligns with a zine template
+    contents.slice(1,5).rev()+contents.slice(5,8)+contents.slice(0,1)
   ).enumerate().map(
     // flip if on top row
     elem => {
