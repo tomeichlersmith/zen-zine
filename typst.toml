@@ -7,7 +7,7 @@ repository = "https://github.com/tomeichlersmith/zen-zine"
 authors = ["Tom Eichlersmith <@tomeichlersmith>"]
 license = "MIT"
 description = "Excellently type-set a fun little zine!"
-keywords = ["zine"]
+keywords = ["zine", "booklet", "leaflet", "brochure", "pamphlet"]
 categories = ["fun", "layout"]
 
 [template]
