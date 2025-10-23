@@ -5,6 +5,9 @@ Providing your eight pages in order will produce a printer page with
 the content in a layout ready to be folded into a zine! The content is
 wrapped before movement so that padding and alignment are respected.
 
+Below is the template and its preview.
+The [full manual](https://github.com/tomeichlersmith/zen-zine/releases/download/v0.2.1/zen-zine-v0.2.1-manual.pdf)
+is available attached to the release you are using.
 Here is the template and its preview:
 
 ```typst
