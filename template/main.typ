@@ -1,4 +1,4 @@
-#import "@preview/zen-zine:0.2.0": zine
+#import "@preview/zen-zine:0.2.1": zine
 
 #set document(author: "Tom", title: "Zen Zine Example")
 #set text(font: "Libertinus Serif", lang: "en")
