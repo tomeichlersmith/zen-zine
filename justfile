@@ -31,5 +31,9 @@ _showman_package *ARGS:
 # install to local repository for testing
 install: (_showman_package "--overwrite" "--symlink")
 
+# check for common typst package mistakes
+check:
+    podman run -v .:/data ghcr.io/typst/package-check check
+
 # package into my fork of typst/packages to prep a PR
 package FORKPATH: (_showman_package "--typst_packages_folder" FORKPATH "--namespace" "preview" "--overwrite")
