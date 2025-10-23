@@ -7,8 +7,7 @@ wrapped before movement so that padding and alignment are respected.
 
 Below is the template and its preview.
 The [full manual](https://github.com/tomeichlersmith/zen-zine/releases/download/v0.2.1/zen-zine-v0.2.1-manual.pdf)
-is available attached to the release you are using.
-Here is the template and its preview:
+is available on GitHub attached to the release it documents.
 
 ```typst
 #import "@preview/zen-zine:0.2.1": zine
