@@ -8,7 +8,7 @@ wrapped before movement so that padding and alignment are respected.
 Here is the template and its preview:
 
 ```typst
-#import "@preview/zen-zine:0.2.0": zine
+#import "@preview/zen-zine:0.2.1": zine
 
 #set document(author: "Tom", title: "Zen Zine Example")
 #set text(font: "Libertinus Serif", lang: "en")
@@ -29,7 +29,7 @@ Here is the template and its preview:
   // or have the zine pages located onto a printer page (false)
   // with this code, you can provide which kind you want on the command line
   //   typst compile input.typ output.pdf --input digital=(true|false)
-  digital: json.decode(sys.inputs.at("digital", default: "false")),
+  digital: json(bytes(sys.inputs.at("digital", default: "false"))),
   // zine-page-margin: 0.25in // margin of zine pages
   // draw-border: true // draw border boxes in printing mode
 )
