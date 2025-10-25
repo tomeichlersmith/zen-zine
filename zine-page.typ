@@ -2,7 +2,7 @@
 #let zine-page(
   width: 100%,
   height: 100%,
-  margin: 0.25in,
+  margin: ("bottom": 0.5in, "rest": 0.25in),
   header: none,
   header-ascent: 30% + 0pt,
   footer: none,
@@ -38,7 +38,7 @@
       top,
       block(
         width: 100%,
-        height: if type(margin) == length { margin } else { margin.at("top") },
+        height: if type(margin) == length { margin } else { margin.at("top", default: margin.at("rest")) },
         inset: (bottom: header-ascent),
         header
       )
@@ -47,7 +47,7 @@
       bottom,
       block(
         width: 100%,
-        height: if type(margin) == length { margin } else { margin.at("top") },
+        height: if type(margin) == length { margin } else { margin.at("bottom", default: margin.at("rest")) },
         inset: (top: footer-descent),
         footer
       )
@@ -59,7 +59,12 @@
 
 #context {
   let contents = range(8).map(
-    i => align(center+top, text(size: 18pt, fill: aqua)[#i])
+    i => block(
+      height: 100%,
+      width: 100%,
+      fill: gray,
+      align(center+top, text(size: 18pt, fill: aqua)[#i])
+    ) 
   ).map(
     // wrap the contents in blocks the size of the zine pages so that we can
     // maneuver them at will
