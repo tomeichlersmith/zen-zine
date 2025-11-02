@@ -1,4 +1,3 @@
-#let zine-page-counter = counter("zine-page")
 #let zine-page(
   width: 100%,
   height: 100%,
@@ -7,30 +6,37 @@
   header-ascent: 30% + 0pt,
   footer: none,
   footer-descent: 30% + 0pt,
-  numbering: auto,
+  page-number: none,
+  numbering: "1",
   number-align: center+bottom,
   body
 ) = {
+  let numbering = if numbering == auto {
+    "1"
+  } else {
+    numbering
+  }
   block(
     width: width,
     height: height,
   )[
     #block(inset: margin, body)
-    #context { counter("zine-page").step() }
 
-    #if number-align.y == horizon {
-      error("horizon number-align is forbidden")
-    } else if number-align.y == bottom {
-      footer = if footer == none {
-        context { align(number-align.x + top, counter("zine-page").display(numbering)) }
-      } else {
-        footer
-      }
-    } else if number-align.y == top {
-      header = if header == none {
-        context { align(number-align.x + bottom, counter("zin-page").display(numbering)) }
-      } else {
-        header
+    #if numbering != none {
+      if number-align.y == horizon {
+        error("horizon number-align is forbidden")
+      } else if number-align.y == bottom {
+        footer = if footer == none {
+          align(number-align.x + top, std.numbering(numbering, page-number))
+        } else {
+          footer
+        }
+      } else if number-align.y == top {
+        header = if header == none {
+          align(number-align.x + bottom, std.numbering(numbering, page-number))
+        } else {
+          header
+        }
       }
     }
 
@@ -65,12 +71,13 @@
       fill: gray,
       align(center+top, text(size: 18pt, fill: aqua)[#i])
     ) 
-  ).map(
+  ).enumerate().map(
     // wrap the contents in blocks the size of the zine pages so that we can
     // maneuver them at will
-    elem => zine-page(
+    ((i, elem)) => zine-page(
       height: page.width/2,
       width: page.height/4,
+      page-number: i+1,
       elem
     )
   )
