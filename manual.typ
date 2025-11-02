@@ -7,7 +7,7 @@
 #set page(height: auto)
 
 #let docs = tidy.parse-module(
-  read("lib.typ"),
+  read("src/lib.typ"),
   name: "zen-zine",
 )
 
