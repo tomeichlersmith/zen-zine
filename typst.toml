@@ -2,7 +2,7 @@
 name = "zen-zine"
 version = "0.2.1"
 compiler = "0.11.0"
-entrypoint = "lib.typ"
+entrypoint = "src/lib.typ"
 repository = "https://github.com/tomeichlersmith/zen-zine"
 authors = ["Tom Eichlersmith <@tomeichlersmith>"]
 license = "MIT"
@@ -16,4 +16,4 @@ entrypoint = "main.typ"
 thumbnail = "template/preview.png"
 
 [tool.packager]
-paths = ["lib.typ", "template", "LICENSE", "README.md"]
+paths = ["src", "template", "LICENSE", "README.md"]
