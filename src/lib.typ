@@ -17,7 +17,7 @@
 /// pages.
 ///
 /// -> content
-#let zine8(
+#let zine(
   /// size of margin around each zine page
   ///
   /// The default value of 0.25in is chosen because that is a pretty
