@@ -1,3 +1,5 @@
+#let default-margin-zine8 = ("bottom": 0.5in, "rest": 0.25in)
+
 /// the base container for a single page in the final (folded or digital) zine
 ///
 /// This is an attempt to replicate the behavior of a `page` container including
@@ -18,10 +20,11 @@
   ///
   /// Since 0.25in is a common minimum margin for printers,
   /// this is a reasonable default. The "bottom" margin is
-  /// increased to make room for the page number.
+  /// increased to make room for the page number if
+  /// numbering is not none and margin is auto.
   ///
   /// -> length
-  margin: ("bottom": 0.5in, "rest": 0.25in),
+  margin: auto,
   /// content to put on the header of each page
   ///
   /// overrides the page numbers. Pass a function
@@ -55,7 +58,7 @@
   ///
   /// Passed into the Typst `numbering` function.
   /// -> str, function
-  numbering: "1",
+  numbering: none,
   /// how to align the page numbers relative to the page
   /// -> align
   number-align: center+bottom,
@@ -68,11 +71,20 @@
   } else {
     numbering
   }
+  let margin = if margin == auto {
+    if numbering == none {
+      0.25in
+    } else {
+      default-margin-zine8
+    }
+  } else {
+    margin
+  }
   block(
     width: width,
     height: height,
   )[
-    #block(inset: margin, body)
+    #block(inset: margin, width: 100%, height: 100%, body)
 
     #if numbering != none {
       if number-align.y == horizon {
@@ -138,7 +150,7 @@
   /// This border is sometimes helpful for seeing the placement of
   /// content on the final printer-ready page.
   /// -> boolean
-  draw-border: true,
+  draw-border: false,
   /// whether to be in printer mode (false) or digital (true)
   ///
   /// When creating a digital zine, the margin specified with `zine-page-margin`

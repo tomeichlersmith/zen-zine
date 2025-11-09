@@ -3,9 +3,12 @@
 #show heading.where(level: 1): hd => {
   pad(top: 2em, text(10em, align(center, hd.body)))
 }
+#let show-page-box(body) = block(stroke: black, width: 100%, height: 100%, body)
 #show: zine
 
+#show-page-box[
 = 1
+]
 
 #pagebreak()
 
@@ -13,8 +16,10 @@
 
 #pagebreak()
 
+#show-page-box[
 == 3
 #lorem(50)
+]
 
 #pagebreak()
 
@@ -32,8 +37,10 @@ six
 
 #pagebreak()
 
+#show-page-box[
 = 7
 seven
+]
 
 #pagebreak()
 
