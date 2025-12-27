@@ -1,4 +1,4 @@
-#import "@preview/zen-zine:0.2.1": zine
+#import "@preview/zen-zine:0.2.1": zine8
 
 #set document(author: "Tom", title: "Zen Zine Example")
 #set text(font: "Libertinus Serif", lang: "en")
@@ -14,7 +14,7 @@
   pad(top: 2em, text(10em, align(center, hd.body)))
 }
 
-#show: zine.with(
+#show: zine8.with(
   // whether to make output PDF pages align with zine pages (true)
   // or have the zine pages located onto a printer page (false)
   // with this code, you can provide which kind you want on the command line

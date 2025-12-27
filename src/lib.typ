@@ -269,8 +269,6 @@
   }
 }
 
-#let zine = zine8
-
 /// construct 16-page zine for the current printer page size
 /// 
 /// The size of the zine pages are deduced from the current page size.

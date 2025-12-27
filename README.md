@@ -100,4 +100,3 @@ tt update
 # 5. check that future changes don't affect reference image
 tt run
 ```
-`tt run` 

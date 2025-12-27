@@ -1,10 +1,10 @@
-#import "/src/lib.typ": zine
+#import "/src/lib.typ": zine8
 #set page("us-letter")
 #show heading.where(level: 1): hd => {
   pad(top: 2em, text(10em, align(center, hd.body)))
 }
 #let show-page-box(body) = block(stroke: black, width: 100%, height: 100%, body)
-#show: zine.with(digital: true)
+#show: zine8.with(digital: true)
 
 #show-page-box[
 = 1
