@@ -26,14 +26,12 @@ is available on GitHub attached to the release it documents.
   pad(top: 2em, text(10em, align(center, hd.body)))
 }
 
-#show: zine.with(
+#show: zine8.with(
   // whether to make output PDF pages align with zine pages (true)
   // or have the zine pages located onto a printer page (false)
   // with this code, you can provide which kind you want on the command line
   //   typst compile input.typ output.pdf --input digital=(true|false)
   digital: json(bytes(sys.inputs.at("digital", default: "false"))),
-  // zine-page-margin: 0.25in // margin of zine pages
-  // draw-border: true // draw border boxes in printing mode
 )
 
 // provide your content pages in order and they

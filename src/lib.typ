@@ -1,4 +1,3 @@
-
 /// the base container for a single page in the final (folded or digital) zine
 ///
 /// This is an attempt to replicate the behavior of a `page` container including
@@ -144,14 +143,15 @@
   ]
 }
 
-/// break content into an array of pages
-///
-/// Perhaps in a future version of Typst, we can call some kind of internal
-/// function given the current `page` configuration and it will inform
-/// us of the array of page contents, but for now, we simply require the
-/// user to manually insert `pagebreak()` calls where they wish the
-/// zine-page boundaries to be.
-/// -> array
+// internal function
+// break content into an array of pages
+//
+// Perhaps in a future version of Typst, we can call some kind of internal
+// function given the current `page` configuration and it will inform
+// us of the array of page contents, but for now, we simply require the
+// user to manually insert `pagebreak()` calls where they wish the
+// zine-page boundaries to be.
+// -> array
 #let break-content-into-page-array(content) = {
   // allow super-users to provide an array of content directly
   if type(content) == array {
@@ -176,10 +176,11 @@
   contents
 }
 
-/// given a look-up-table of new names, create a function that can
-/// rename the keys of an input dictionary accordingly
-/// 
-/// keys that are not in the look-up-table keep the same name
+// internal function
+// given a look-up-table of new names, create a function that can
+// rename the keys of an input dictionary accordingly
+// 
+// keys that are not in the look-up-table keep the same name
 #let key-remapper(look-up-table) = {
   (dict) => {
     let updated = (:)
@@ -193,6 +194,7 @@
 }
 
 #let zine8-default-margin = ("bottom": 0.5in, "rest": 0.25in)
+
 #let zine8-margin-names = (
   ( "inner-fold": (), "outer-fold": ("left","top"), "printer-margin": ("bottom","right"), "cut": () ),
   ( "inner-fold": ("right",), "outer-fold": ("top",), "printer-margin": ("bottom", "left"), "cut": () ),
@@ -231,6 +233,22 @@
   /// zine with the pages cut out.
   /// -> boolean
   digital: false,
+  /// the margin for the zine pages
+  ///
+  /// The normal margin names ("top", "bottom", etc...) are relative to
+  /// the zine-page (i.e. the "top" of a zine-page when reading).
+  /// Additionally, there are some more margin names specific to zines
+  /// that refer to how the two pages border one another.
+  /// - "inner-fold": two pages that are next to each
+  ///   other when the zine is open
+  /// - "outer-fold": two pages that is a fold but
+  ///   the pages are not next to each other when open
+  /// - "cut": the paper would be cut between these two pages
+  /// - "printer-margin": outer-edge of printer page
+  /// These names are mapped to the correct normal margin names for
+  /// each zine-page.
+  /// -> length|dictionary
+  margin: auto,
   /// other named arguments are given to zine-page
   ..zine-page-kwargs,
   /// input content of zine
@@ -246,15 +264,15 @@
   )
 
   // extract the margin separately so we can remap the names if necessary
-  let zine-page-kwargs = zine-page-kwargs.named()
-  let margin = zine-page-kwargs.remove(
-    "margin",
-    default: if zine-page-kwargs.keys().contains("numbering") {
+  let margin = if margin == auto {
+    if zine-page-kwargs.named().keys().contains("numbering") {
       zine8-default-margin
     } else {
       0.25in
     }
-  )
+  } else {
+    margin
+  }
 
   context {
     // we need to be in context so we can get the full page's height and width
@@ -373,6 +391,22 @@
   /// zine with the pages cut out.
   /// -> boolean
   digital: false,
+  /// margin for the zine pages
+  ///
+  /// The normal margin names ("top", "bottom", etc...) are relative to
+  /// the zine-page (i.e. the "top" of a zine-page when reading).
+  /// Additionally, there are some more margin names specific to zines
+  /// that refer to how the two pages border one another.
+  /// - "inner-fold": two pages that are next to each
+  ///   other when the zine is open
+  /// - "outer-fold": two pages that is a fold but
+  ///   the pages are not next to each other when open
+  /// - "cut": the paper would be cut between these two pages
+  /// - "printer-margin": outer-edge of printer page
+  /// These names are mapped to the correct normal margin names for
+  /// each zine-page.
+  /// -> length|dictionary
+  margin: auto,
   /// other named arguments are given to zine-page
   ..zine-page-kwargs,
   /// input content of zine
