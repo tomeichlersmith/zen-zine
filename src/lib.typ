@@ -1,4 +1,3 @@
-#let default-margin-zine8 = ("bottom": 0.5in, "rest": 0.25in)
 
 /// the base container for a single page in the final (folded or digital) zine
 ///
@@ -18,10 +17,8 @@
   height: 100%,
   /// margin of each page in the zine
   ///
-  /// Since 0.25in is a common minimum margin for printers,
-  /// this is a reasonable default. The "bottom" margin is
-  /// increased to make room for the page number if
-  /// numbering is not none and margin is auto.
+  /// This margin is passed directly to block.inset so it
+  /// cannot use the zine-margin-names.
   ///
   /// -> length
   margin: auto,
@@ -78,26 +75,23 @@
   } else {
     numbering
   }
-  let margin = if margin == auto {
-    if numbering == none {
-      0.25in
-    } else {
-      default-margin-zine8
-    }
-  } else {
-    margin
+
+  let body-block-kwargs = (
+    width: 100%,
+    height: 100%
+  )
+  if margin != auto {
+    body-block-kwargs.insert("inset", margin)
   }
+  if draw-border {
+    body-block-kwargs.insert("stroke", black)
+  }
+
   block(
     width: width,
     height: height,
   )[
-    #block(
-      inset: margin,
-      width: 100%,
-      height: 100%,
-      stroke: if draw-border { black } else { none },
-      body
-    )
+    #block(..body-block-kwargs, body)
 
     #if numbering != none {
       if number-align.y == horizon {
@@ -121,7 +115,13 @@
       top,
       block(
         width: 100%,
-        height: if type(margin) == length { margin } else { margin.at("top", default: margin.at("rest")) },
+        height: if type(margin) == length { 
+          margin
+        } else if type(margin) == dictionary {
+          margin.at("top", default: margin.at("rest"))
+        } else {
+          auto
+        },
         inset: (bottom: header-ascent),
         header
       )
@@ -130,7 +130,13 @@
       bottom,
       block(
         width: 100%,
-        height: if type(margin) == length { margin } else { margin.at("bottom", default: margin.at("rest")) },
+        height: if type(margin) == length { 
+          margin
+        } else if type(margin) == dictionary {
+          margin.at("bottom", default: margin.at("rest"))
+        } else {
+          auto
+        },
         inset: (top: footer-descent),
         footer
       )
@@ -169,6 +175,34 @@
 
   contents
 }
+
+/// given a look-up-table of new names, create a function that can
+/// rename the keys of an input dictionary accordingly
+/// 
+/// keys that are not in the look-up-table keep the same name
+#let key-remapper(look-up-table) = {
+  (dict) => {
+    let updated = (:)
+    for (key, val) in dict.pairs() {
+      for new-key in look-up-table.at(key, default: (key,)) {
+        updated.insert(new-key, val)
+      }
+    }
+    updated
+  }
+}
+
+#let zine8-default-margin = ("bottom": 0.5in, "rest": 0.25in)
+#let zine8-margin-names = (
+  ( "inner-fold": (), "outer-fold": ("left","top"), "printer-margin": ("bottom","right"), "cut": () ),
+  ( "inner-fold": ("right",), "outer-fold": ("top",), "printer-margin": ("bottom", "left"), "cut": () ),
+  ( "inner-fold": ("left",), "outer-fold": ("right",), "printer-margin": ("bottom",), "cut": ("top",) ),
+  ( "inner-fold": ("right",), "outer-fold": ("left",), "printer-margin": ("bottom",), "cut": ("top",) ),
+  ( "inner-fold": ("left",), "outer-fold": ("top",), "printer-margin": ("bottom","right"), "cut": () ),
+  ( "inner-fold": ("right",), "outer-fold": ("top",), "printer-margin": ("bottom","left"), "cut": () ),
+  ( "inner-fold": ("left",), "outer-fold": ("right",), "printer-margin": ("bottom",), "cut": ("top",) ),
+  ( "inner-fold": (), "outer-fold": ("left","right"), "printer-margin": ("bottom",), "cut": ("top",) ),
+)
 
 /// construct an eight-page zine for the current printer page size
 /// 
@@ -211,6 +245,17 @@
     message: "Document content does not have exactly 8 pages (7 pagebreaks)."
   )
 
+  // extract the margin separately so we can remap the names if necessary
+  let zine-page-kwargs = zine-page-kwargs.named()
+  let margin = zine-page-kwargs.remove(
+    "margin",
+    default: if zine-page-kwargs.keys().contains("numbering") {
+      zine8-default-margin
+    } else {
+      0.25in
+    }
+  )
+
   context {
     // we need to be in context so we can get the full page's height and width
     // in order to deduce the zine page height and width
@@ -221,13 +266,21 @@
   
     // wrap pages in zine-page
     let contents = contents.enumerate().map(
-      ((i, content))=> zine-page(
-        height: zine-page-height,
-        width: zine-page-width,
-        page-number: i+1,
-        ..zine-page-kwargs,
-        content
-      )
+      ((i, content)) => {
+        let zine-page-margin = if type(margin) == dictionary {
+          key-remapper(zine8-margin-names.at(i))(margin)
+        } else {
+          margin
+        }
+        zine-page(
+          height: zine-page-height,
+          width: zine-page-width,
+          page-number: i+1,
+          margin: zine-page-margin,
+          ..zine-page-kwargs,
+          content
+        )
+      }
     )
   
     // zine-page is handling the margin, so the parent page should have zero margin
@@ -268,6 +321,13 @@
     }
   }
 }
+
+/*
+#let zine16-margin-names = (
+  ( "inner-fold": ("right",), "outer-fold": ("top",), "printer-margin": ("left",), "cut": ("bottom",)),
+  ( "inner-fold": ("left",), "outer-fold": ("bottom",), "printer-margin": (,), "cut": ("top","right")),
+)
+*/
 
 /// construct 16-page zine for the current printer page size
 /// 
