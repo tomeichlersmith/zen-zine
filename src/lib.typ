@@ -322,12 +322,33 @@
   }
 }
 
-/*
-#let zine16-margin-names = (
-  ( "inner-fold": ("right",), "outer-fold": ("top",), "printer-margin": ("left",), "cut": ("bottom",)),
-  ( "inner-fold": ("left",), "outer-fold": ("bottom",), "printer-margin": (,), "cut": ("top","right")),
+#let zine16-default-margin = (
+  "printer-margin": 0.25in,
+  "rest": 0.05in
 )
-*/
+#let zine16-default-margin-numbers = (
+  "printer-margin": 0.25in,
+  "bottom": 0.5in,
+  "rest": 0.1in
+)
+#let zine16-margin-names = (
+  ( "inner-fold": (), "outer-fold": ("left","top"), "printer-margin": ("right","bottom"), "cut": ()),
+  ( "inner-fold": ("right",), "outer-fold": ("top",), "printer-margin": ("left",), "cut": ("bottom",)),
+  ( "inner-fold": ("left",), "outer-fold": ("bottom",), "printer-margin": (), "cut": ("top","right")),
+  ( "inner-fold": ("right",), "outer-fold": ("bottom",), "printer-margin": (), "cut": ("top","left")),
+  ( "inner-fold": ("left",), "outer-fold": ("top",), "printer-margin": ("right",), "cut": ("bottom",)),
+  ( "inner-fold": ("right",), "outer-fold": ("top",), "printer-margin": ("left","bottom"), "cut": ()),
+  ( "inner-fold": ("left",), "outer-fold": ("right",), "printer-margin": ("bottom",), "cut": ("top",)),
+  ( "inner-fold": ("right",), "outer-fold": ("left",), "printer-margin": ("bottom",), "cut": ("top",)),
+  ( "inner-fold": ("left",), "outer-fold": ("top",), "printer-margin": ("bottom","right"), "cut": ()),
+  ( "inner-fold": ("right",), "outer-fold": ("top",), "printer-margin": ("left",), "cut": ("bottom",)),
+  ( "inner-fold": ("left",), "outer-fold": ("bottom",), "printer-margin": (), "cut": ("top","right")),
+  ( "inner-fold": ("right",), "outer-fold": ("bottom",), "printer-margin": (), "cut": ("top","left")),
+  ( "inner-fold": ("left",), "outer-fold": ("top",), "printer-margin": ("right",), "cut": ("bottom",)),
+  ( "inner-fold": ("right",), "outer-fold": ("top",), "printer-margin": ("left","bottom"), "cut": ()),
+  ( "inner-fold": ("left",), "outer-fold": ("right",), "printer-margin": ("bottom",), "cut": ("top",)),
+  ( "inner-fold": (), "outer-fold": ("right","left"), "printer-margin": ("bottom",), "cut": ("top",)),
+)
 
 /// construct 16-page zine for the current printer page size
 /// 
@@ -366,6 +387,17 @@
     message: "Document content does not have exactly 16 pages (15 pagebreaks)."
   )
 
+  // extract the margin separately so we can remap the names if necessary
+  let zine-page-kwargs = zine-page-kwargs.named()
+  let margin = zine-page-kwargs.remove(
+    "margin",
+    default: if zine-page-kwargs.keys().contains("numbering") {
+      zine16-default-margin-numbers
+    } else {
+      zine16-default-margin
+    }
+  )
+
   context {
     // we need to be in context so we can get the full page's height and width
     // in order to deduce the zine page height and width
@@ -376,13 +408,21 @@
 
     // wrap pages in zine-page
     let contents = contents.enumerate().map(
-      ((i, content))=> zine-page(
-        height: zine-page-height,
-        width: zine-page-width,
-        page-number: i+1,
-        ..zine-page-kwargs,
-        content
-      )
+      ((i, content)) => {
+        let zine-page-margin = if type(margin) == dictionary {
+          key-remapper(zine16-margin-names.at(i))(margin)
+        } else {
+          margin
+        }
+        zine-page(
+          height: zine-page-height,
+          width: zine-page-width,
+          page-number: i+1,
+          margin: zine-page-margin,
+          ..zine-page-kwargs,
+          content
+        )
+      }
     )
 
     // zine-page is handling the margin, so the parent page should have zero margin
