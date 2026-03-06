@@ -10,13 +10,13 @@ The [full manual](https://github.com/tomeichlersmith/zen-zine/releases/download/
 is available on GitHub attached to the release it documents.
 
 ```typst
-#import "@preview/zen-zine:0.3.0": zine
+#import "@preview/zen-zine:0.3.0": zine8
 
 #set document(author: "Tom", title: "Zen Zine Example")
 #set text(font: "Libertinus Serif", lang: "en")
 
 // this page size is what the printer page size is
-// if building a digitial zine, the page will be re-set
+// if building a digital zine, the page will be re-set
 // so that the PDF pages align with the zine page size
 // and not the printer page size
 #set page("us-letter")
@@ -32,6 +32,8 @@ is available on GitHub attached to the release it documents.
   // with this code, you can provide which kind you want on the command line
   //   typst compile input.typ output.pdf --input digital=(true|false)
   digital: json(bytes(sys.inputs.at("digital", default: "false"))),
+  // draw border in printer page zine to help with design
+  draw-border: true
 )
 
 // provide your content pages in order and they
