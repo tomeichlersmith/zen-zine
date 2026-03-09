@@ -89,7 +89,7 @@ just install # symlink local clone to local package area for easier live develop
 ```
 
 See the tytanic documentation for how to write tests, for a short reference:
-```
+```sh
 # 1. create a new test (following my arbitrary naming convention)
 tt new sixteen/page-numbers/digital
 # 2. edit the test file
