@@ -10,7 +10,7 @@ compile *ARGS:
 render: (compile "preview-digital.pdf" "--input" "digital=true") (compile "preview-print.pdf" "--input" "digital=false")
 
 # compile template example into preview png
-preppreview: (compile "template/preview.png --format png")
+preppreview: (compile "preview.png --format png")
 
 # compile manual
 manual:

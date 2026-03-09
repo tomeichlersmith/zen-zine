@@ -77,7 +77,7 @@ $ 8 $
 
 ```
 
-![Image of Template](template/preview.png)
+![Image of Template](preview.png)
 
 ## Development
 Using [just](https://just.systems/man/en/), [showman](https://github.com/ntjess/showman/tree/main), and [tytanic](https://typst-community.github.io/tytanic/index.html) to help aid development.
