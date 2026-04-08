@@ -377,7 +377,7 @@
 /// The zine's pages are provided in the order that they should be read,
 /// separated by `pagebreak()`s. They are wrapped and then moved into position
 /// so that any zine-page-internal layout is preserved.
-//
+///
 /// === #text(red.darken(25%), underline[Failure Mode])
 /// #text(red.darken(25%), [This function will fail if there are not exactly fifteen `pagebreak()` calls
 /// within the document (implying sixteen pages are defined).])
