@@ -260,7 +260,7 @@
 
   assert.eq(
     contents.len(), 8,
-    message: "Document content does not have exactly 8 pages (7 pagebreaks)."
+    message: "Document content does not have exactly 8 pages (7 pagebreaks), only "+str(contents.len())+" pages were found."
   )
 
   // extract the margin separately so we can remap the names if necessary
@@ -418,7 +418,7 @@
 
   assert.eq(
     contents.len(), 16,
-    message: "Document content does not have exactly 16 pages (15 pagebreaks)."
+    message: "Document content does not have exactly 16 pages (15 pagebreaks), only "+str(contents.len())+" pages were found."
   )
 
   // extract the margin separately so we can remap the names if necessary

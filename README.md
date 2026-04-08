@@ -80,11 +80,10 @@ $ 8 $
 ![Image of Template](preview.png)
 
 ## Development
-Using [just](https://just.systems/man/en/), [showman](https://github.com/ntjess/showman/tree/main), and [tytanic](https://typst-community.github.io/tytanic/index.html) to help aid development.
+Using [just](https://just.systems/man/en/), [showman](https://github.com/ntjess/showman/tree/main) (via [uvx](https://docs.astral.sh/uv/)), and [tytanic](https://typst-community.github.io/tytanic/index.html) to help aid development.
 
 After installing `just`, the additional initialization recipes are in the justfile.
 ```sh
-just init-showman # create a python3 venv and install showman for packaging
 just install # symlink local clone to local package area for easier live development
 ```
 
