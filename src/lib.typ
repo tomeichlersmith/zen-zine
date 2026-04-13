@@ -193,6 +193,25 @@
   }
 }
 
+// internal function
+// given the value of page.margin, unpack it into its full dictionary
+// with keys top, bottom, left, right
+#let unpack-margin(margin) = {
+  if margin == auto {
+    return unpack-margin(0pt)
+  }
+  if type(margin) != dictionary {
+    return (
+      top: margin,
+      bottom: margin,
+      left: margin,
+      right: margin
+    )
+  } else {
+    return margin
+  }
+}
+
 #let zine8-default-margin = ("bottom": 0.5in, "rest": 0.25in)
 
 #let zine8-margin-names = (
@@ -277,11 +296,10 @@
   context {
     // we need to be in context so we can get the full page's height and width
     // in order to deduce the zine page height and width
-    // each of the zine pages share the margin with their neighbors
-    // this height/width is without margins
-    let zine-page-height = page.width/2;
-    let zine-page-width = page.height/4;
-  
+    let page-margin = unpack-margin(page.margin)
+    let zine-page-height = (page.width - page-margin.left - page-margin.right)/2;
+    let zine-page-width = (page.height - page-margin.top - page-margin.bottom)/4;
+    
     // wrap pages in zine-page
     let contents = contents.enumerate().map(
       ((i, content)) => {
@@ -300,12 +318,16 @@
         )
       }
     )
-  
+    
     // zine-page is handling the margin, so the parent page should have zero margin
-    set page(margin: 0pt)
+    let margin-kwargs = (:)
+    if page.margin == auto {
+      margin-kwargs.insert("margin", 0pt)
+    }
+    set page(..margin-kwargs)
     if digital {
       // resize output page to be same size as zine-page
-      set page(height: zine-page-height, width: zine-page-width)
+      set page(margin: 0pt, height: zine-page-height, width: zine-page-width)
       for zpage in contents {
         zpage
       }
@@ -443,7 +465,7 @@
     // this height/width is without margins
     let zine-page-height = page.height/4;
     let zine-page-width = page.width/4;
-
+    
     // wrap pages in zine-page
     let contents = contents.enumerate().map(
       ((i, content)) => {
@@ -462,9 +484,13 @@
         )
       }
     )
-
+    
     // zine-page is handling the margin, so the parent page should have zero margin
-    set page(margin: 0pt)
+    let page-kwargs = (:)
+    if page.margin == auto {
+      page-kwargs.insert("margin", 0pt)
+    }
+    set page(..page-kwargs)
     if digital {
       // resize output page to be the same size as the zine-page
       set page(height: zine-page-height, width: zine-page-width)
@@ -486,7 +512,7 @@
           elem.at(1)
         }
       )
-  
+    
       let zine-grid = grid.with(
         columns: 4 * (zine-page-width, ),
         rows: zine-page-height
