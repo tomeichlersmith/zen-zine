@@ -17,7 +17,7 @@
   /// margin of each page in the zine
   ///
   /// This margin is passed directly to block.inset so it
-  /// cannot use the zine-margin-names.
+  /// cannot use the zine margin names in @zine-margin-names.
   ///
   /// -> length
   margin: auto,
@@ -254,18 +254,9 @@
   digital: false,
   /// the margin for the zine pages
   ///
-  /// The normal margin names ("top", "bottom", etc...) are relative to
-  /// the zine-page (i.e. the "top" of a zine-page when reading).
-  /// Additionally, there are some more margin names specific to zines
-  /// that refer to how the two pages border one another.
-  /// - "inner-fold": two pages that are next to each
-  ///   other when the zine is open
-  /// - "outer-fold": two pages that is a fold but
-  ///   the pages are not next to each other when open
-  /// - "cut": the paper would be cut between these two pages
-  /// - "printer-margin": outer-edge of printer page
-  /// These names are mapped to the correct normal margin names for
-  /// each zine-page.
+  /// These can be the normal margin names or the zine margins listed
+  /// in @zine-margin-names.
+  ///
   /// -> length|dictionary
   margin: auto,
   /// other named arguments are given to zine-page
@@ -419,18 +410,9 @@
   digital: false,
   /// margin for the zine pages
   ///
-  /// The normal margin names ("top", "bottom", etc...) are relative to
-  /// the zine-page (i.e. the "top" of a zine-page when reading).
-  /// Additionally, there are some more margin names specific to zines
-  /// that refer to how the two pages border one another.
-  /// - "inner-fold": two pages that are next to each
-  ///   other when the zine is open
-  /// - "outer-fold": two pages that is a fold but
-  ///   the pages are not next to each other when open
-  /// - "cut": the paper would be cut between these two pages
-  /// - "printer-margin": outer-edge of printer page
-  /// These names are mapped to the correct normal margin names for
-  /// each zine-page.
+  /// These can be the normal margin names or the zine margins listed
+  /// in @zine-margin-names.
+  ///
   /// -> length|dictionary
   margin: auto,
   /// other named arguments are given to zine-page
