@@ -446,7 +446,7 @@
     // this height/width is without margins
     let zine-page-height = (page.height - 2*trim-margin)/4;
     let zine-page-width = (page.width - 2*trim-margin)/4;
-    
+
     // wrap pages in zine-page
     let contents = contents.enumerate().map(
       ((i, content)) => {
@@ -488,7 +488,7 @@
           elem.at(1)
         }
       )
-    
+
       let zine-grid = grid.with(
         columns: 4 * (zine-page-width, ),
         rows: zine-page-height
