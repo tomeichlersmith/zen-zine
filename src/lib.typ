@@ -193,25 +193,6 @@
   }
 }
 
-// internal function
-// given the value of page.margin, unpack it into its full dictionary
-// with keys top, bottom, left, right
-#let unpack-margin(margin) = {
-  if margin == auto {
-    return unpack-margin(0pt)
-  }
-  if type(margin) != dictionary {
-    return (
-      top: margin,
-      bottom: margin,
-      left: margin,
-      right: margin
-    )
-  } else {
-    return margin
-  }
-}
-
 #let zine8-default-margin = ("bottom": 0.5in, "rest": 0.25in)
 
 #let zine8-margin-names = (
@@ -323,6 +304,7 @@
     
     if digital {
       // resize output page to be same size as zine-page
+      // and set margin to 0 since the digital zine is the pages after trimming and folding
       set page(margin: 0pt, height: zine-page-height, width: zine-page-width)
       for zpage in contents {
         zpage
@@ -483,16 +465,11 @@
         )
       }
     )
-    
-    // zine-page is handling the margin, so the parent page should have zero margin
-    let page-kwargs = (:)
-    if page.margin == auto {
-      page-kwargs.insert("margin", 0pt)
-    }
-    set page(..page-kwargs)
+
     if digital {
       // resize output page to be the same size as the zine-page
-      set page(height: zine-page-height, width: zine-page-width)
+      // and set margin to zero since digital zine is after trimming and folding
+      set page(margin: 0pt, height: zine-page-height, width: zine-page-width)
       for zpage in contents {
         zpage
       }
