@@ -17,7 +17,7 @@
   /// margin of each page in the zine
   ///
   /// This margin is passed directly to block.inset so it
-  /// cannot use the zine-margin-names.
+  /// cannot use the zine margin names in @zine-margin-names.
   ///
   /// -> length
   margin: auto,
@@ -235,18 +235,9 @@
   digital: false,
   /// the margin for the zine pages
   ///
-  /// The normal margin names ("top", "bottom", etc...) are relative to
-  /// the zine-page (i.e. the "top" of a zine-page when reading).
-  /// Additionally, there are some more margin names specific to zines
-  /// that refer to how the two pages border one another.
-  /// - "inner-fold": two pages that are next to each
-  ///   other when the zine is open
-  /// - "outer-fold": two pages that is a fold but
-  ///   the pages are not next to each other when open
-  /// - "cut": the paper would be cut between these two pages
-  /// - "printer-margin": outer-edge of printer page
-  /// These names are mapped to the correct normal margin names for
-  /// each zine-page.
+  /// These can be the normal margin names or the zine margins listed
+  /// in @zine-margin-names.
+  ///
   /// -> length|dictionary
   margin: auto,
   /// other named arguments are given to zine-page
@@ -274,14 +265,24 @@
     margin
   }
 
+  // the trim margin is something we apply to the entire printer page
+  // and /not/ to the zine pages themselves so we `remove` it here
+  // zine-page is handling the margin, so the default parent margin 
+  // should be zero (no trim)
+  let trim-margin = if type(margin) == dictionary {
+    margin.remove("trim-margin", default: 0pt)
+  } else {
+    0pt
+  }
+
+  set page(margin: trim-margin)
+
   context {
     // we need to be in context so we can get the full page's height and width
     // in order to deduce the zine page height and width
-    // each of the zine pages share the margin with their neighbors
-    // this height/width is without margins
-    let zine-page-height = page.width/2;
-    let zine-page-width = page.height/4;
-  
+    let zine-page-height = (page.width - 2*trim-margin)/2;
+    let zine-page-width = (page.height - 2*trim-margin)/4;
+    
     // wrap pages in zine-page
     let contents = contents.enumerate().map(
       ((i, content)) => {
@@ -300,12 +301,11 @@
         )
       }
     )
-  
-    // zine-page is handling the margin, so the parent page should have zero margin
-    set page(margin: 0pt)
+    
     if digital {
       // resize output page to be same size as zine-page
-      set page(height: zine-page-height, width: zine-page-width)
+      // and set margin to 0 since the digital zine is the pages after trimming and folding
+      set page(margin: 0pt, height: zine-page-height, width: zine-page-width)
       for zpage in contents {
         zpage
       }
@@ -397,18 +397,9 @@
   digital: false,
   /// margin for the zine pages
   ///
-  /// The normal margin names ("top", "bottom", etc...) are relative to
-  /// the zine-page (i.e. the "top" of a zine-page when reading).
-  /// Additionally, there are some more margin names specific to zines
-  /// that refer to how the two pages border one another.
-  /// - "inner-fold": two pages that are next to each
-  ///   other when the zine is open
-  /// - "outer-fold": two pages that is a fold but
-  ///   the pages are not next to each other when open
-  /// - "cut": the paper would be cut between these two pages
-  /// - "printer-margin": outer-edge of printer page
-  /// These names are mapped to the correct normal margin names for
-  /// each zine-page.
+  /// These can be the normal margin names or the zine margins listed
+  /// in @zine-margin-names.
+  ///
   /// -> length|dictionary
   margin: auto,
   /// other named arguments are given to zine-page
@@ -426,23 +417,35 @@
   )
 
   // extract the margin separately so we can remap the names if necessary
-  let zine-page-kwargs = zine-page-kwargs.named()
-  let margin = zine-page-kwargs.remove(
-    "margin",
-    default: if zine-page-kwargs.keys().contains("numbering") {
+  let margin = if margin == auto {
+    if zine-page-kwargs.named().keys().contains("numbering") {
       zine16-default-margin-numbers
     } else {
       zine16-default-margin
     }
-  )
+  } else {
+    margin
+  }
+
+  // the trim margin is something we apply to the entire printer page
+  // and /not/ to the zine pages themselves so we `remove` it here
+  // zine-page is handling the margin, so the default parent margin 
+  // should be zero (no trim)
+  let trim-margin = if type(margin) == dictionary {
+    margin.remove("trim-margin", default: 0pt)
+  } else {
+    0pt
+  }
+
+  set page(margin: trim-margin)
 
   context {
     // we need to be in context so we can get the full page's height and width
     // in order to deduce the zine page height and width
     // each of the zine pages share the margin with their neighbors
     // this height/width is without margins
-    let zine-page-height = page.height/4;
-    let zine-page-width = page.width/4;
+    let zine-page-height = (page.height - 2*trim-margin)/4;
+    let zine-page-width = (page.width - 2*trim-margin)/4;
 
     // wrap pages in zine-page
     let contents = contents.enumerate().map(
@@ -463,11 +466,10 @@
       }
     )
 
-    // zine-page is handling the margin, so the parent page should have zero margin
-    set page(margin: 0pt)
     if digital {
       // resize output page to be the same size as the zine-page
-      set page(height: zine-page-height, width: zine-page-width)
+      // and set margin to zero since digital zine is after trimming and folding
+      set page(margin: 0pt, height: zine-page-height, width: zine-page-width)
       for zpage in contents {
         zpage
       }
@@ -486,7 +488,7 @@
           elem.at(1)
         }
       )
-  
+
       let zine-grid = grid.with(
         columns: 4 * (zine-page-width, ),
         rows: zine-page-height
