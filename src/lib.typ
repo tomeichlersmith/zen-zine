@@ -284,12 +284,23 @@
     margin
   }
 
+  // the trim margin is something we apply to the entire printer page
+  // and /not/ to the zine pages themselves so we `remove` it here
+  // zine-page is handling the margin, so the default parent margin 
+  // should be zero (no trim)
+  let trim-margin = if type(margin) == dictionary {
+    margin.remove("trim-margin", default: 0pt)
+  } else {
+    0pt
+  }
+
+  set page(margin: trim-margin)
+
   context {
     // we need to be in context so we can get the full page's height and width
     // in order to deduce the zine page height and width
-    let page-margin = unpack-margin(page.margin)
-    let zine-page-height = (page.width - page-margin.left - page-margin.right)/2;
-    let zine-page-width = (page.height - page-margin.top - page-margin.bottom)/4;
+    let zine-page-height = (page.width - 2*trim-margin)/2;
+    let zine-page-width = (page.height - 2*trim-margin)/4;
     
     // wrap pages in zine-page
     let contents = contents.enumerate().map(
@@ -310,12 +321,6 @@
       }
     )
     
-    // zine-page is handling the margin, so the parent page should have zero margin
-    let margin-kwargs = (:)
-    if page.margin == auto {
-      margin-kwargs.insert("margin", 0pt)
-    }
-    set page(..margin-kwargs)
     if digital {
       // resize output page to be same size as zine-page
       set page(margin: 0pt, height: zine-page-height, width: zine-page-width)
@@ -430,23 +435,35 @@
   )
 
   // extract the margin separately so we can remap the names if necessary
-  let zine-page-kwargs = zine-page-kwargs.named()
-  let margin = zine-page-kwargs.remove(
-    "margin",
-    default: if zine-page-kwargs.keys().contains("numbering") {
+  let margin = if margin == auto {
+    if zine-page-kwargs.named().keys().contains("numbering") {
       zine16-default-margin-numbers
     } else {
       zine16-default-margin
     }
-  )
+  } else {
+    margin
+  }
+
+  // the trim margin is something we apply to the entire printer page
+  // and /not/ to the zine pages themselves so we `remove` it here
+  // zine-page is handling the margin, so the default parent margin 
+  // should be zero (no trim)
+  let trim-margin = if type(margin) == dictionary {
+    margin.remove("trim-margin", default: 0pt)
+  } else {
+    0pt
+  }
+
+  set page(margin: trim-margin)
 
   context {
     // we need to be in context so we can get the full page's height and width
     // in order to deduce the zine page height and width
     // each of the zine pages share the margin with their neighbors
     // this height/width is without margins
-    let zine-page-height = page.height/4;
-    let zine-page-width = page.width/4;
+    let zine-page-height = (page.height - 2*trim-margin)/4;
+    let zine-page-width = (page.width - 2*trim-margin)/4;
     
     // wrap pages in zine-page
     let contents = contents.enumerate().map(

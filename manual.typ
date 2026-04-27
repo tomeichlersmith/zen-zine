@@ -65,13 +65,14 @@ Additionally, more possible margin names specified in @zine-margin-names allow f
 
 #figure(
   table(
-    columns: (auto, 50%),
-    align: (right, left),
+    columns: (auto, 60%),
+    align: (right, left, left),
     table.header([*name*], [*description*]),
     [`inner-fold`], [two pages connected by a fold of the paper and the pages are adjacent when the zine is open],
     [`outer-fold`], [two pages connected by a fold of the paper but the pages are not next to each other when the zine is open],
     [`cut`], [the paper would be cut between these two pages],
-    [`printer-margin`], [the zine page side adjacent to the outer edge of the printer page]
+    [`printer-margin`], [the zine page side adjacent to the outer edge of the printer page which is *not* planned to be trimmed off (and thus shrinks the size of the zine page), defaults to margin value or `rest` if not specified],
+    [`trim-margin`], [boundary of zine page along outer edge of printer page that will be trimmed before folding, defaults to `0pt` if not specified.]
   ),
   caption: [definition of the additional margins for zine-pages]
 ) <zine-margin-names>
@@ -88,14 +89,16 @@ The first option is to use the `printer-margin` key for zine margins. For exampl
 #raw(read("tests/eight/printer-margin/no-trim/test.typ"), lang: "typ", block: true)
 
 which produces the left image in @printer-margin-comp.
-The second option is to modify the printer page directly using `set page` and
-remove any additional `printer-margin` for the zine margins.
-For example
+The second option is to use the `trim-margin` key for zine margins.  For example
 
-#codly(range: (3,4))
+#codly(range: (3,3))
 #raw(read("tests/eight/printer-margin/intend-to-trim/test.typ"), lang: "typ", block: true)
 
 which produces the right image in @printer-margin-comp.
+The actual distance between the edge of the printer page and the edge of the zine page is
+`printer-margin` plus `trim-margin`; however, only `trim-margin` is included when determining
+the full size of the zine pages allowing them to be more equally-sized at the cost of requiring
+the paper to be cut in order to re-align the zine page boundaries with where the folds would be.
 
 #figure(
   grid(
@@ -103,7 +106,7 @@ which produces the right image in @printer-margin-comp.
     box(stroke: black, image("tests/eight/printer-margin/no-trim/ref/1.png", width: 95%)),
     box(stroke: black, image("tests/eight/printer-margin/intend-to-trim/ref/1.png", width: 95%)),
   ),
-  caption: [Comparison between specifying the printer margin within zine margin (left) or via `set page` (right).]
+  caption: [Comparison between specifying with `printer-margin` (left) or `trim-margin` (right).]
 ) <printer-margin-comp>
 
 While using a large margin like 3cm is probably unrealistic, it does help show the difference between the two strategies which (as the name of this section suggests) largely comes down to how you are constructing the physical zine.
@@ -111,9 +114,9 @@ While using a large margin like 3cm is probably unrealistic, it does help show t
 If you plan to have a white background (or whatever the color of the paper is) in the final, folded zine, then you can probably do fine without needing to trim off the printer margins.
 In this case, the first option (using the `printer-margin` zine margin or the default behavior) is the best case since then the page boundaries are lined up with where the folds would be (when the paper is not trimmed).
 
-If you won't have a white background or you want the zine pages to be identical in size, then you will probably need to trim off the printer margins. In this case, the second option using `set page` works well because the page boundaries are lined up with the where the folds would be _after_ trimming the printer margin off.
+If you won't have a white background or you want the zine pages to be identical in size, then you will probably need to trim off the printer margins. In this case, the second option using `trim-margin` works well because the page boundaries are lined up with the where the folds would be _after_ trimming the paper a width of `trim-margin` around the outside.
 
-The default margin is 0.25in (a pretty common minimum margin for printers) assuming that the zine will not be trimmed (i.e. the `printer-margin` zine margin is used rather than `set page`).
+The default margin is 0.25in (a pretty common minimum margin for printers) assuming that the zine will not be trimmed. Notice that `printer-margin` can be implicitly defined by specifying a number to `margin` (or via the `rest` key in the dictionary), but `trim-margin` must be set explicitly. 
 
 = Function Reference
 #tidy.show-module(
