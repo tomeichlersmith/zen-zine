@@ -23,3 +23,12 @@ install:
 # package into my fork of typst/packages to prep a PR
 package FORKPATH:
     uvx showman package typst.toml --typst_packages_folder {{FORKPATH}} --namespace preview --overwrite
+
+# light clone of fork repo assumed on github
+clone-packages repo="tomeichlersmith/typst-packages":
+    git clone --depth 1 --no-checkout --filter="tree:0" git@github.com:{{repo}} packages
+    git -C packages sparse-checkout init
+    git -C packages sparse-checkout set packages/preview/zen-zine
+    git -C packages remote add upstream git@github.com:typst/packages
+    git -C packages config remote.upstream.partialclonefilter tree:0
+    git -C packages checkout main
