@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -o nounset
+set -o errexit
+
+curl -L -o typst.tar.xz \
+  https://github.com/typst/typst/releases/download/v0.14.2/typst-x86_64-unknown-linux-musl.tar.xz
+xz --decompress typst.tar.xz
+tar --strip-components 1 -xf typst.tar typst-x86_64-unknown-linux-musl/typst
+rm typst.tar
