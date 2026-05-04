@@ -3,8 +3,35 @@
 set -o nounset
 set -o errexit
 
-curl -L -o typst.tar.xz \
-  https://github.com/typst/typst/releases/download/v0.14.2/typst-x86_64-unknown-linux-musl.tar.xz
+error() {
+  printf >&2 "\033[1;31mERROR: \033[0m\033[31m%s\033[0m\n" "%*"
+}
+
+inf() {
+  printf "\033[1mINFO: \033[0m%s\n" "$*"
+}
+
+# fetch the latest release version for the input owner and repo
+# https://docs.github.com/en/rest/releases/releases?apiVersion=2022-11-28#get-the-latest-release
+# Args
+#  1 : repository
+# Output
+#  prints the tag to stdout
+#  we strip a prefix v if it exists
+fetch() {
+  gh api \
+    -H "Accept: application/vnd.github.json" \
+    -H "X-GitHub-Api-Version: 2022-11-28" \
+    "/repos/${1}/releases/latest" \
+    --jq '.assets | map(select(.name == "typst-x86_64-unknown-linux-musl.tar.xz")) | .[0].browser_download_url'
+}
+
+latest="$(fetch typst/typst)"
+inf "latest url = ${latest}, downloading"
+curl -L -o typst.tar.xz "${latest}"
+inf "decompressing..."
 xz --decompress typst.tar.xz
+inf "unpacking..."
 tar --strip-components 1 -xf typst.tar typst-x86_64-unknown-linux-musl/typst
+inf "typst available at ${PWD}/typst"
 rm typst.tar
