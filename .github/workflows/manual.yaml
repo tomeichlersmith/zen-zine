@@ -12,11 +12,11 @@ permissions:
 jobs:
   build:
     runs-on: codeberg-small
+    container:
+      image: ghcr.io/typst/typst:0.14.2
     steps:
-      - uses: typst-community/setup-typst@v4
-      - uses: extractions/setup-just@v3
       - uses: actions/checkout@v4
-      - run: just manual
+      - run: typst compile manual.typ
       - uses: actions/upload-artifact@v4
         if: ${{ github.event_name != 'release' }}
         with:
