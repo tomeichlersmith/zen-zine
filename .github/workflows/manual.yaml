@@ -13,9 +13,9 @@ jobs:
   build:
     runs-on: codeberg-small
     steps:
+      - uses: https://github.com/typst-community/setup-typst@v4
       - uses: actions/checkout@v4
-      - run: ./ci/get-typst
-      - run: ./typst compile manual.typ
+      - run: typst compile manual.typ
       - uses: actions/upload-artifact@v4
         if: ${{ github.event_name != 'release' }}
         with:
