@@ -111,5 +111,6 @@ git commit -m "bump version to NEWVER for DESCRIPTION"
 git push
 # 3. manual looks good
 just manual
+mv manual.pdf zen-zine-vNEWVER-manual.pdf
 # 4. do new release on website uploading the manual
 ```

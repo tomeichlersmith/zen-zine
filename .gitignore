@@ -4,6 +4,7 @@
 # generated PDF/PNG from testing
 *.pdf
 *.png
+*.svg
 !template/preview.png
 !tests/*/ref/*.png
 

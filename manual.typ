@@ -52,6 +52,36 @@
   caption: [a short reference example using #ref-fn("zine8") to help get started along with its rendering]
 )
 
+== limitations
+The biggest limitation for `zen-zine` right now is the requirement that `pagebreak`s are manually called.
+While there has been some discussion about giving deeper access to the Typst layout engine (see for example
+#link("https://github.com/typst/typst/issues/187")[Typst Issue 187]), it is a complicated feature to implement
+and one that is far from being realized. This means `zen-zine` requires explicit `pagebreak`s to delineate
+how the content should be split across the different zine pages.
+These `pagebreak`s naturally conflict with other packages that use `pagebreak`; moreover, `zen-zine` wraps
+the content of the different zine pages in containers so that it can be placed on the final printer page,
+but you then cannot call `pagebreak` from within containers! This makes it virtually impossible for `zen-zine`
+and another package that calls `pagebreak` to coexist within the same document
+(see, for example, #link("https://codeberg.org/tomeichlersmith/zen-zine/issues/16")[zen-zine Issue 16] where
+`chordish` is the other package).
+
+My advice is to drop back to the old-reliable way of producing zines where you separate the construction of
+the zine pages and the assembling of those zine pages into a printable page into two source documents.
+For example
+
+```sh
+typst compile two-step-content.typ two-step-content-{p}.svg
+typst compile two-step-assemble.typ
+```
+
+where `two-step-content.typ` is
+#raw(read("two-step-content.typ"), lang: "typ", block: true)
+
+and `two-step-assemble.typ` is where `zen-zine` is used
+#raw(read("two-step-assemble.typ"), lang: "typ", block: true)
+
+Please open a merge request or post an issue if you have tweaks to this recipe that make it easier!
+
 == pages and margins <zine-margin>
 There are some limitations in the dynamics of the underlying Typst `page`, so we
 are forced to manually replicate the behavior of a `page` container (done by #ref-fn("zine-page")).
