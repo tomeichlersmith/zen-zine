@@ -21,7 +21,7 @@ install:
     uvx showman package typst.toml --overwrite --symlink
 
 # package into my fork of typst/packages to prep a PR
-package FORKPATH:
+package FORKPATH="packages/packages":
     uvx showman package typst.toml --typst_packages_folder {{FORKPATH}} --namespace preview --overwrite
 
 # light clone of fork repo assumed on github
