@@ -99,3 +99,17 @@ tt update
 # 5. check that future changes don't affect reference image
 tt run
 ```
+
+New release
+```sh
+# 1. tests are all good
+tt run
+# 2. bump version number
+sed -i 's|OLDVER|NEWVER|g' README.md typst.toml template/main.typ
+git add README.md typst.toml template/main.typ
+git commit -m "bump version to NEWVER for DESCRIPTION"
+git push
+# 3. manual looks good
+just manual
+# 4. do new release on website uploading the manual
+```
