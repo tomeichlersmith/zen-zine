@@ -206,6 +206,25 @@
   ( "inner-fold": (), "outer-fold": ("left","right"), "printer-margin": ("bottom",), "cut": ("top",) ),
 )
 
+/// set the page to be the size of a zine page
+///
+/// This is only helpful when you need to separate constructing the content
+/// of the zine pages from assembling the zine pages onto the printer page
+/// (see limitations section of manual).
+#let zine8-set-page(
+  /// the amount of paper you will trim off from all edges of the page
+  /// -> length
+  trim-margin: 0in,
+  /// the content of the zine pages
+  /// -> content
+  body
+) = context {
+  let zine-page-height = (page.width - 2*trim-margin)/2;
+  let zine-page-width = (page.height - 2*trim-margin)/4;
+  set page(margin: 0.25in, height: zine-page-height, width: zine-page-width)
+  body
+}
+
 /// construct an eight-page zine for the current printer page size
 /// 
 /// The size of the zine pages are deduced from the current page size.
@@ -338,6 +357,28 @@
       zine-grid(..contents)
     }
   }
+}
+
+/// assemble the pre-made pages of the zine onto the printer page
+///
+/// This is only helpful when you need to separate constructing the content
+/// of the zine pages from assembling the zine pages onto the printer page
+/// (see limitations section of manual).
+///
+/// -> content
+#let zine8-assemble(
+  /// the amount of paper you will trim off from all edges of the page
+  /// -> length
+  trim-margin: 0in,
+  /// the list of pre-made zine pages to be assembled onto a printer page
+  /// -> array
+  zine-pages
+) = {
+  zine8(
+    digital: false,
+    margin: (trim-margin: trim-margin, rest: 0pt),
+    zine-pages.map((path) => image(path, height: 100%))
+  )
 }
 
 #let zine16-default-margin = (

@@ -75,14 +75,14 @@ typst compile two-step-assemble.typ
 ```
 
 where `two-step-content.typ` is
-#raw(read("two-step-content.typ"), lang: "typ", block: true)
+#raw(read("tests/eight/two-step/content/test.typ"), lang: "typ", block: true)
 
 and `two-step-assemble.typ` is where `zen-zine` is used
-#raw(read("two-step-assemble.typ"), lang: "typ", block: true)
+#raw(read("tests/eight/two-step/assemble/test.typ"), lang: "typ", block: true)
 
 Please open a merge request or post an issue if you have tweaks to this recipe that make it easier!
 
-== pages and margins <zine-margin>
+== pages and margins
 There are some limitations in the dynamics of the underlying Typst `page`, so we
 are forced to manually replicate the behavior of a `page` container (done by #ref-fn("zine-page")).
 However, the pages in the final, folded zine are _not_ the same as the page that the zine is printed on.
