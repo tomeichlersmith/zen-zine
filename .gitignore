@@ -9,3 +9,6 @@
 
 # python venv with showman
 venv
+
+# clone of typst/packages for packaging
+packages
