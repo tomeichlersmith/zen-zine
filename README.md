@@ -6,8 +6,8 @@ the content in a layout ready to be folded into a zine! The content is
 wrapped before movement so that padding and alignment are respected.
 
 Below is the template and its preview.
-The [full manual](https://github.com/tomeichlersmith/zen-zine/releases/download/v0.4.1/zen-zine-v0.4.1-manual.pdf)
-is available on GitHub attached to the release it documents.
+The [full manual](https://codeberg.org/tomeichlersmith/zen-zine/releases/download/v0.4.1/zen-zine-v0.4.1-manual.pdf)
+is available on Codeberg attached to the release it documents.
 
 ```typst
 #import "@preview/zen-zine:0.4.1": zine8
@@ -105,7 +105,7 @@ New release
 # 1. tests are all good
 tt run
 # 2. bump version number
-sed -i 's|OLDVER|NEWVER|g' README.md typst.toml template/main.typ
+just set-version NEWVER
 git add README.md typst.toml template/main.typ
 git commit -m "bump version to NEWVER for DESCRIPTION"
 git push

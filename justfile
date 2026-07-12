@@ -24,6 +24,9 @@ install:
 package FORKPATH="packages/packages":
     uvx showman package typst.toml --typst_packages_folder {{FORKPATH}} --namespace preview --overwrite
 
+set-version NEWVER:
+    sed -i "s|$(grep version typst.toml | cut -f 3 -d ' ' | tr -d \")|{{NEWVER}}|g" README.md typst.toml template/main.typ
+
 # light clone of fork repo assumed on github
 clone-packages repo="tomeichlersmith/typst-packages":
     git clone --depth 1 --no-checkout --filter="tree:0" git@github.com:{{repo}} packages
