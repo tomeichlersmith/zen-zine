@@ -52,36 +52,6 @@
   caption: [a short reference example using #ref-fn("zine8") to help get started along with its rendering]
 )
 
-== limitations
-The biggest limitation for `zen-zine` right now is the requirement that `pagebreak`s are manually called.
-While there has been some discussion about giving deeper access to the Typst layout engine (see for example
-#link("https://github.com/typst/typst/issues/187")[Typst Issue 187]), it is a complicated feature to implement
-and one that is far from being realized. This means `zen-zine` requires explicit `pagebreak`s to delineate
-how the content should be split across the different zine pages.
-These `pagebreak`s naturally conflict with other packages that use `pagebreak`; moreover, `zen-zine` wraps
-the content of the different zine pages in containers so that it can be placed on the final printer page,
-but you then cannot call `pagebreak` from within containers! This makes it virtually impossible for `zen-zine`
-and another package that calls `pagebreak` to coexist within the same document
-(see, for example, #link("https://codeberg.org/tomeichlersmith/zen-zine/issues/16")[zen-zine Issue 16] where
-`chordish` is the other package).
-
-My advice is to drop back to the old-reliable way of producing zines where you separate the construction of
-the zine pages and the assembling of those zine pages into a printable page into two source documents.
-For example
-
-```sh
-typst compile two-step-content.typ two-step-content-{p}.svg
-typst compile two-step-assemble.typ
-```
-
-where `two-step-content.typ` is
-#raw(read("tests/eight/two-step/content/test.typ"), lang: "typ", block: true)
-
-and `two-step-assemble.typ` is where `zen-zine` is used
-#raw(read("tests/eight/two-step/assemble/test.typ"), lang: "typ", block: true)
-
-Please open a merge request or post an issue if you have tweaks to this recipe that make it easier!
-
 == pages and margins
 There are some limitations in the dynamics of the underlying Typst `page`, so we
 are forced to manually replicate the behavior of a `page` container (done by #ref-fn("zine-page")).
@@ -147,6 +117,38 @@ In this case, the first option (using the `printer-margin` zine margin or the de
 If you won't have a white background or you want the zine pages to be identical in size, then you will probably need to trim off the printer margins. In this case, the second option using `trim-margin` works well because the page boundaries are lined up with the where the folds would be _after_ trimming the paper a width of `trim-margin` around the outside.
 
 The default margin is 0.25in (a pretty common minimum margin for printers) assuming that the zine will not be trimmed. Notice that `printer-margin` can be implicitly defined by specifying a number to `margin` (or via the `rest` key in the dictionary), but `trim-margin` must be set explicitly. 
+
+== limitations
+The biggest limitation for `zen-zine` right now is the requirement that `pagebreak`s are manually called.
+While there has been some discussion about giving deeper access to the Typst layout engine (see for example
+#link("https://github.com/typst/typst/issues/187")[Typst Issue 187]), it is a complicated feature to implement
+and one that is far from being realized. This means `zen-zine` requires explicit `pagebreak`s to delineate
+how the content should be split across the different zine pages.
+These `pagebreak`s naturally conflict with other packages that use `pagebreak`; moreover, `zen-zine` wraps
+the content of the different zine pages in containers so that it can be placed on the final printer page,
+but you then cannot call `pagebreak` from within containers! This makes it virtually impossible for `zen-zine`
+and another package that calls `pagebreak` to coexist within the same document
+(see, for example, #link("https://codeberg.org/tomeichlersmith/zen-zine/issues/16")[zen-zine Issue 16] where
+`chordish` is the other package).
+
+My advice is to drop back to the old-reliable way of producing zines where you separate the construction of
+the zine pages and the assembling of those zine pages into a printable page into two source documents.
+For example
+
+```sh
+typst compile two-step-content.typ two-step-content-{p}.svg
+typst compile two-step-assemble.typ
+```
+
+where `two-step-content.typ` is
+#raw(read("tests/eight/two-step/content/test.typ"), lang: "typ", block: true)
+
+and `two-step-assemble.typ` is where `zen-zine` is used
+#raw(read("tests/eight/two-step/assemble/test.typ"), lang: "typ", block: true)
+
+Please open a merge request or post an issue if you have tweaks to this recipe that make it easier!
+The biggest issue with this recipe is that the asymmetric nature of zine margins (when _not_ using `trim-margin`)
+cannot be done in this method so the zine pages will probably be slightly misaligned after folding.
 
 = Function Reference
 #tidy.show-module(
