@@ -5,8 +5,8 @@
 *.pdf
 *.png
 *.svg
-!template/preview.png
-!tests/*/ref/*.png
+!preview.png
+!tests/**/ref/*.png
 
 # python venv with showman
 venv
