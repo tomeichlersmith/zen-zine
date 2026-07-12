@@ -463,13 +463,13 @@
 #let zine16-set-page(
   /// the amount of paper you will trim off from all edges of the page
   /// -> length
-  trim-margin: 0in,
+  trim-margin: 0.25in,
   /// the margin around the edges of the zine pages
   ///
   /// If using a dictionary, it cannot use the special zine-page-margin names.
   ///
   /// -> length | dictionary
-  margin: 0.25in,
+  margin: 0.05in,
   /// the content of the zine pages
   /// -> content
   body
@@ -620,7 +620,7 @@
 #let zine16-assemble(
   /// the amount of paper you will trim off from all edges of the page
   /// -> length
-  trim-margin: 0in,
+  trim-margin: 0.25in,
   /// the list of pre-made zine pages to be assembled onto a printer page
   /// which can either be the array itself or a function that produces the
   /// zine page given the page number 1 up to 8.
