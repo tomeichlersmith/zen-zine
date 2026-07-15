@@ -106,9 +106,6 @@ New release
 tt run
 # 2. bump version number
 just set-version NEWVER
-git add README.md typst.toml template/main.typ
-git commit -m "bump version to NEWVER for DESCRIPTION"
-git push
 # 3. manual looks good
 just manual
 mv manual.pdf zen-zine-vNEWVER-manual.pdf
