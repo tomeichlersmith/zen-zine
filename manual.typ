@@ -148,7 +148,8 @@ and `two-step-assemble.typ` is where `zen-zine` is used
 
 Please open a merge request or post an issue if you have tweaks to this recipe that make it easier!
 The biggest issue with this recipe is that the asymmetric nature of zine margins (when _not_ using `trim-margin`)
-cannot be done in this method so the zine pages will probably be slightly misaligned after folding.
+cannot be done in this method so the zine pages will probably be slightly misaligned after folding
+(unless you use `trim-margin` and cut off that amount of paper before folding).
 
 = Function Reference
 #tidy.show-module(
