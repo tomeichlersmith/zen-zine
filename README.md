@@ -6,11 +6,11 @@ the content in a layout ready to be folded into a zine! The content is
 wrapped before movement so that padding and alignment are respected.
 
 Below is the template and its preview.
-The [full manual](https://github.com/tomeichlersmith/zen-zine/releases/download/v0.4.0/zen-zine-v0.4.0-manual.pdf)
-is available on GitHub attached to the release it documents.
+The [full manual](https://codeberg.org/tomeichlersmith/zen-zine/releases/download/v0.4.1/zen-zine-v0.4.1-manual.pdf)
+is available on Codeberg attached to the release it documents.
 
 ```typst
-#import "@preview/zen-zine:0.4.0": zine8
+#import "@preview/zen-zine:0.4.1": zine8
 
 #set document(author: "Tom", title: "Zen Zine Example")
 #set text(font: "Libertinus Serif", lang: "en")
@@ -98,4 +98,16 @@ tt update
 # 4. make sure reference image is correct and then commit if it is
 # 5. check that future changes don't affect reference image
 tt run
+```
+
+New release
+```sh
+# 1. tests are all good
+tt run
+# 2. bump version number
+just set-version NEWVER
+# 3. manual looks good
+just manual
+mv manual.pdf zen-zine-vNEWVER-manual.pdf
+# 4. do new release on website uploading the manual
 ```

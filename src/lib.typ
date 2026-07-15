@@ -206,6 +206,31 @@
   ( "inner-fold": (), "outer-fold": ("left","right"), "printer-margin": ("bottom",), "cut": ("top",) ),
 )
 
+/// set the page to be the size of a zine page
+///
+/// This is only helpful when you need to separate constructing the content
+/// of the zine pages from assembling the zine pages onto the printer page
+/// (see limitations section of manual).
+#let zine8-set-page(
+  /// the amount of paper you will trim off from all edges of the page
+  /// -> length
+  trim-margin: 0in,
+  /// the margin around the edges of the zine pages
+  ///
+  /// If using a dictionary, it cannot use the special zine-page-margin names.
+  ///
+  /// -> length | dictionary
+  margin: 0.25in,
+  /// the content of the zine pages
+  /// -> content
+  body
+) = context {
+  let zine-page-height = (page.width - 2*trim-margin)/2;
+  let zine-page-width = (page.height - 2*trim-margin)/4;
+  set page(margin: margin, height: zine-page-height, width: zine-page-width)
+  body
+}
+
 /// construct an eight-page zine for the current printer page size
 /// 
 /// The size of the zine pages are deduced from the current page size.
@@ -340,6 +365,68 @@
   }
 }
 
+// internal function to share page-processing logic between two zine sizes
+#let load-zine-pages(
+  number,
+  zine-pages
+) = {
+  let zine-pages = if type(zine-pages) == function {
+    range(number).map((i) => zine-pages(i+1))
+  } else {
+    zine-pages
+  }
+
+  assert.eq(
+    type(zine-pages), array,
+    message: "zine-pages needs to be an array of the constructed pages"
+  )
+  assert.eq(
+    zine-pages.len(), number,
+    message: "There were not "+str(number)+" zine-pages provided."
+  )
+
+  let zine-pages = if zine-pages.all((page) => type(page) == str) {
+    // all of the zine-pages are strings, assume they are paths
+    zine-pages.map((path) => image(path, height: 100%))
+  } else {
+    // assume they are content and user knows what they are doing
+    zine-pages
+  }
+
+  return zine-pages;
+}
+
+/// assemble the pre-made pages of the zine onto the printer page
+///
+/// This is only helpful when you need to separate constructing the content
+/// of the zine pages from assembling the zine pages onto the printer page
+/// (see limitations section of manual).
+///
+/// -> content
+#let zine8-assemble(
+  /// the amount of paper you will trim off from all edges of the page
+  /// -> length
+  trim-margin: 0in,
+  /// the list of pre-made zine pages to be assembled onto a printer page
+  /// which can either be the array itself or a function that produces the
+  /// zine page given the page number 1 up to 8.
+  ///
+  /// These zine-pages are then passed into `image` (with `height: 100%`)
+  /// if all of the entries in the array are `str`.
+  /// If you want to more customize how the image is loaded,
+  /// you can return an `image` rather than the path string in your array or
+  /// function.
+  ///
+  /// -> array | function
+  zine-pages
+) = {
+  zine8(
+    digital: false,
+    margin: (trim-margin: trim-margin, rest: 0pt),
+    load-zine-pages(8, zine-pages)
+  )
+}
+
 #let zine16-default-margin = (
   "printer-margin": 0.25in,
   "rest": 0.05in
@@ -367,6 +454,31 @@
   ( "inner-fold": ("left",), "outer-fold": ("right",), "printer-margin": ("bottom",), "cut": ("top",)),
   ( "inner-fold": (), "outer-fold": ("right","left"), "printer-margin": ("bottom",), "cut": ("top",)),
 )
+
+/// set the page to be the size of a zine page
+///
+/// This is only helpful when you need to separate constructing the content
+/// of the zine pages from assembling the zine pages onto the printer page
+/// (see limitations section of manual).
+#let zine16-set-page(
+  /// the amount of paper you will trim off from all edges of the page
+  /// -> length
+  trim-margin: 0.25in,
+  /// the margin around the edges of the zine pages
+  ///
+  /// If using a dictionary, it cannot use the special zine-page-margin names.
+  ///
+  /// -> length | dictionary
+  margin: 0.05in,
+  /// the content of the zine pages
+  /// -> content
+  body
+) = context {
+  let zine-page-height = (page.height - 2*trim-margin)/4;
+  let zine-page-width = (page.width - 2*trim-margin)/4;
+  set page(margin: margin, height: zine-page-height, width: zine-page-width)
+  body
+}
 
 /// construct 16-page zine for the current printer page size
 /// 
@@ -496,4 +608,35 @@
       zine-grid(..contents)
     }
   }
+}
+
+/// assemble the pre-made pages of the zine onto the printer page
+///
+/// This is only helpful when you need to separate constructing the content
+/// of the zine pages from assembling the zine pages onto the printer page
+/// (see limitations section of manual).
+///
+/// -> content
+#let zine16-assemble(
+  /// the amount of paper you will trim off from all edges of the page
+  /// -> length
+  trim-margin: 0.25in,
+  /// the list of pre-made zine pages to be assembled onto a printer page
+  /// which can either be the array itself or a function that produces the
+  /// zine page given the page number 1 up to 8.
+  ///
+  /// These zine-pages are then passed into `image` (with `height: 100%`)
+  /// if all of the entries in the array are `str`.
+  /// If you want to more customize how the image is loaded,
+  /// you can return an `image` rather than the path string in your array or
+  /// function.
+  ///
+  /// -> array | function
+  zine-pages
+) = {
+  zine16(
+    digital: false,
+    margin: (trim-margin: trim-margin, rest: 0pt),
+    load-zine-pages(16, zine-pages)
+  )
 }
