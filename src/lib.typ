@@ -53,7 +53,7 @@
   /// how the page numbers should be displayed
   ///
   /// Passed into the Typst `numbering` function.
-  /// -> str, function
+  /// -> str|function
   numbering: none,
   /// how to align the page numbers relative to the page
   /// -> align
@@ -62,9 +62,20 @@
   /// 
   /// This border is sometimes helpful for seeing the placement of
   /// content on the final printer-ready page and seeing the margins
-  /// of the zine pages
+  /// of the zine pages. This border is _outside_ all of the margins
+  /// except `trim-margin`.
+  ///
   /// -> boolean
   draw-border: false,
+  /// the background for the zine-page
+  ///
+  /// If you want to set a background for the entire print,
+  /// you should probably just use `set page(fill: ...)` instead.
+  /// This is helpful for displaying differences between margin
+  /// options.
+  ///
+  /// -> none|color|gradient|tiling
+  fill: none,
   /// content to put into page
   /// -> content
   body
@@ -89,6 +100,7 @@
   block(
     width: width,
     height: height,
+    fill: fill
   )[
     #block(..body-block-kwargs, body)
 
@@ -217,7 +229,7 @@
   trim-margin: 0in,
   /// the margin around the edges of the zine pages
   ///
-  /// If using a dictionary, it cannot use the special zine-page-margin names.
+  /// If using a dictionary, it cannot use the special margin names from @zine-margin-names.
   ///
   /// -> length | dictionary
   margin: 0.25in,
@@ -265,7 +277,7 @@
   ///
   /// -> length|dictionary
   margin: auto,
-  /// other named arguments are given to zine-page
+  /// other named arguments are given to @zine-page
   ..zine-page-kwargs,
   /// input content of zine
   /// -> content
@@ -466,7 +478,7 @@
   trim-margin: 0.25in,
   /// the margin around the edges of the zine pages
   ///
-  /// If using a dictionary, it cannot use the special zine-page-margin names.
+  /// If using a dictionary, it cannot use the special margin names from @zine-margin-names.
   ///
   /// -> length | dictionary
   margin: 0.05in,
@@ -514,7 +526,7 @@
   ///
   /// -> length|dictionary
   margin: auto,
-  /// other named arguments are given to zine-page
+  /// other named arguments are given to @zine-page
   ..zine-page-kwargs,
   /// input content of zine
   /// -> content

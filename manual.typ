@@ -77,6 +77,13 @@ Additionally, more possible margin names specified in @zine-margin-names allow f
   caption: [definition of the additional margins for zine-pages]
 ) <zine-margin-names>
 
+#figure(
+  image("tests/eight/show-margins/ref/1.png", width: 80%),
+  caption: [Demonstration of the different zine page margin names. The gray area is the area of the printer page that is included in the `trim-margin`. The white area is the rest of the margins and the inner light blue area is where the content is placed. The words are labeling the pair of names that could be used to adjust the adjacent margin.]
+) <zine-margin-demo>
+
+@zine-margin-demo displays the different zine margins with a eight-page zine in printer mode. The values for the different margins listed in @zine-margin-names are large and intentionally varied in order to show functionality.
+
 === to trim or not to trim
 If you have made a zine before, you may notice a slight size discrepancy between the different zine pages.
 This is because printers often have a minimum margin from the edge of the printer page and so the "outer most"
