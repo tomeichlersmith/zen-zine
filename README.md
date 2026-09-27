@@ -110,4 +110,9 @@ just set-version NEWVER
 just manual
 mv manual.pdf zen-zine-vNEWVER-manual.pdf
 # 4. do new release on website uploading the manual
+# 5. copy release into typst/packages fork
+#    `just clone-packages user/typst-packages` to init local package clone
+just package
+# 6. push updated package and open PR in GitHub
+git -C packages push origin main
 ```
