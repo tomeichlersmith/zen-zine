@@ -377,6 +377,16 @@
   }
 }
 
+// internal function to check if a page should be treated like a file path
+// and loaded with image
+#let is-file-path(page) = {
+  return (
+    type(page) == str or (
+      sys.version >= version(0,15,0) and type(page) == path
+    )
+  )
+}
+
 // internal function to share page-processing logic between two zine sizes
 #let load-zine-pages(
   number,
@@ -397,7 +407,7 @@
     message: "There were not "+str(number)+" zine-pages provided."
   )
 
-  let zine-pages = if zine-pages.all((page) => type(page) == str) {
+  let zine-pages = if zine-pages.all(is-file-path) {
     // all of the zine-pages are strings, assume they are paths
     zine-pages.map((path) => image(path, height: 100%))
   } else {
